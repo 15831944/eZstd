@@ -1,0 +1,18 @@
+F:\Documents\A软件学习\!编程\Visual Basic.NET\eZstd\bin\eZAPI.dll.config
+F:\Documents\A软件学习\!编程\Visual Basic.NET\eZstd\bin\eZAPI.dll
+F:\Documents\A软件学习\!编程\Visual Basic.NET\eZstd\bin\eZAPI.pdb
+F:\Documents\A软件学习\!编程\Visual Basic.NET\eZstd\bin\eZAPI.xml
+F:\Documents\A软件学习\!编程\Visual Basic.NET\eZstd\Projects\eZAPI\obj\Debug\eZstd.eZAPI.Resources.resources
+F:\Documents\A软件学习\!编程\Visual Basic.NET\eZstd\Projects\eZAPI\obj\Debug\eZAPI.vbproj.GenerateResource.Cache
+F:\Documents\A软件学习\!编程\Visual Basic.NET\eZstd\Projects\eZAPI\obj\Debug\eZAPI.dll
+F:\Documents\A软件学习\!编程\Visual Basic.NET\eZstd\Projects\eZAPI\obj\Debug\eZAPI.xml
+F:\Documents\A软件学习\!编程\Visual Basic.NET\eZstd\Projects\eZAPI\obj\Debug\eZAPI.pdb
+F:\Software\Programming\Tests_Examples\eZstd\bin\eZAPI.dll
+F:\Software\Programming\Tests_Examples\eZstd\bin\eZAPI.pdb
+F:\Software\Programming\Tests_Examples\eZstd\bin\eZAPI.xml
+F:\Software\Programming\Tests_Examples\eZstd\Projects\eZAPI\obj\Debug\eZstd.eZAPI.Resources.resources
+F:\Software\Programming\Tests_Examples\eZstd\Projects\eZAPI\obj\Debug\eZAPI.vbproj.GenerateResource.Cache
+F:\Software\Programming\Tests_Examples\eZstd\Projects\eZAPI\obj\Debug\eZAPI.dll
+F:\Software\Programming\Tests_Examples\eZstd\Projects\eZAPI\obj\Debug\eZAPI.xml
+F:\Software\Programming\Tests_Examples\eZstd\Projects\eZAPI\obj\Debug\eZAPI.pdb
+F:\Software\Programming\Tests_Examples\eZstd\Projects\eZAPI\obj\Debug\eZAPI.vbprojResolveAssemblyReference.cache
