@@ -179,7 +179,7 @@ Public Class AdoForExcel
         '考察连接是否是针对于Excel文档的。
         Dim strDtSource As String = conn.DataSource        '"C:\Users\Administrator\Desktop\测试Visio与Excel交互\数据.xlsx"
         Dim strExt As String = Path.GetExtension(strDtSource)
-        If strExt = ".xlsx" OrElse strExt = "xls" OrElse strExt = "xlsb" Then
+        If strExt = ".xlsx" OrElse strExt = ".xls" OrElse strExt = ".xlsb" Then
             Return True
         Else
             Return False
