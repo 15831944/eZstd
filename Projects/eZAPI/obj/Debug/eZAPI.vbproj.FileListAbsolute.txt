@@ -16,3 +16,12 @@ F:\Software\Programming\Tests_Examples\eZstd\Projects\eZAPI\obj\Debug\eZAPI.dll
 F:\Software\Programming\Tests_Examples\eZstd\Projects\eZAPI\obj\Debug\eZAPI.xml
 F:\Software\Programming\Tests_Examples\eZstd\Projects\eZAPI\obj\Debug\eZAPI.pdb
 F:\Software\Programming\Tests_Examples\eZstd\Projects\eZAPI\obj\Debug\eZAPI.vbprojResolveAssemblyReference.cache
+F:\Software\Programming\Tests_Examples\GitHubProjects\eZstd\bin\eZAPI.dll
+F:\Software\Programming\Tests_Examples\GitHubProjects\eZstd\bin\eZAPI.pdb
+F:\Software\Programming\Tests_Examples\GitHubProjects\eZstd\bin\eZAPI.xml
+F:\Software\Programming\Tests_Examples\GitHubProjects\eZstd\Projects\eZAPI\obj\Debug\eZAPI.vbprojResolveAssemblyReference.cache
+F:\Software\Programming\Tests_Examples\GitHubProjects\eZstd\Projects\eZAPI\obj\Debug\eZstd.eZAPI.Resources.resources
+F:\Software\Programming\Tests_Examples\GitHubProjects\eZstd\Projects\eZAPI\obj\Debug\eZAPI.vbproj.GenerateResource.Cache
+F:\Software\Programming\Tests_Examples\GitHubProjects\eZstd\Projects\eZAPI\obj\Debug\eZAPI.dll
+F:\Software\Programming\Tests_Examples\GitHubProjects\eZstd\Projects\eZAPI\obj\Debug\eZAPI.xml
+F:\Software\Programming\Tests_Examples\GitHubProjects\eZstd\Projects\eZAPI\obj\Debug\eZAPI.pdb

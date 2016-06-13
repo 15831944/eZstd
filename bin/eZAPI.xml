@@ -2201,6 +2201,57 @@ then clicks a control in the dialog box, the control receives a WM_HELP message.
  <returns></returns>
  <remarks>返回值给出窗口函数返回的值.它的意义取决于被发送的消息，但返回值通常被忽略。</remarks>
 </member>
+<member name="M:eZstd.eZAPI.APIMessage.keybd_event(System.Byte,System.Byte,System.UInt32,System.UIntPtr)">
+ <summary>
+ 向任意进程发送键盘消息
+ </summary>
+ <param name="bVk">按键的虚拟键值，如回车键为vk_return, tab键为vk_tab,可以参考常用模拟键的键值对照表，也可以通过System.Windows.Forms.Keys枚举来查看。</param>
+ <param name="bScan">扫描码，一般不用设置，用0代替就行；</param>
+ <param name="dwFlags">选项标志，如果为keydown则置0即可，如果为keyup则设成数值2，即常数 KEYEVENTF_KEYUP；</param>
+ <param name="dwExtraInfo">一般也是置0即可。</param>
+ <remarks>
+  调用案例1：
+ keybd_event(System.Windows.Forms.Keys.Escape, 0, 0, 0)  ' 按下 ESCAPE键
+ keybd_event(System.Windows.Forms.Keys.NumLock, 0, KEYEVENTF_KEYUP, 0)  ' 按键弹起，其中 KEYEVENTF_KEYUP=2 
+  调用案例2：    模拟按下 'ALT+F4'键
+ keybd_event(18, 0, 0, 0);
+ keybd_event(115, 0, 0, 0);
+ keybd_event(115, 0, KEYEVENTF_KEYUP, 0); 
+ keybd_event(18, 0, KEYEVENTF_KEYUP, 0);
+</remarks>
+</member>
+<member name="M:eZstd.eZAPI.APIMessage.mouse_event(eZstd.eZAPI.APIMessage.MouseOperation,System.UInt32,System.UInt32,System.UInt32,System.UInt32)">
+ <summary> 发送鼠标消息 </summary>
+ <param name="dwFlags"> (位编码)要如何操作鼠标。如果不指定 MOUSEEVENTF_ABSOLUTE，则是相对于当前的鼠标位置。 </param>
+ <param name="dx">根据MOUSEEVENTF_ABSOLUTE标志，指定x，y方向的绝对位置或相对位置 </param>
+ <param name="dy">根据MOUSEEVENTF_ABSOLUTE标志，指定x，y方向的绝对位置或相对位置 </param>
+ <param name="dwData">没有使用，直接赋值为0 </param>
+ <param name="dwExtraInfo">没有使用，直接赋值为0 </param>
+</member>
+<member name="F:eZstd.eZAPI.APIMessage.MouseOperation.MouseEventF_Move">
+ <Summary> 移动鼠标 </Summary>
+</member>
+<member name="F:eZstd.eZAPI.APIMessage.MouseOperation.MouseEventF_LeftDown">
+ <Summary> 模拟鼠标左键按下 </Summary>
+</member>
+<member name="F:eZstd.eZAPI.APIMessage.MouseOperation.MouseEventF_LeftUp">
+ <Summary> 模拟鼠标左键抬起 </Summary>
+</member>
+<member name="F:eZstd.eZAPI.APIMessage.MouseOperation.MouseEventF_RightDown">
+ <Summary> 模拟鼠标右键按下 </Summary>
+</member>
+<member name="F:eZstd.eZAPI.APIMessage.MouseOperation.MouseEventF_RightUp">
+ <Summary> 模拟鼠标右键抬起 </Summary>
+</member>
+<member name="F:eZstd.eZAPI.APIMessage.MouseOperation.MouseEventF_MiddleDown">
+ <Summary> 模拟鼠标中键按下 </Summary>
+</member>
+<member name="F:eZstd.eZAPI.APIMessage.MouseOperation.MouseEventF_MiddleUp">
+ <Summary> 模拟鼠标中键抬起 </Summary>
+</member>
+<member name="F:eZstd.eZAPI.APIMessage.MouseOperation.MouseEventF_Absolute">
+ <Summary> 标示是否采用绝对坐标 </Summary>
+</member>
 <member name="T:eZstd.eZAPI.MSG">
  <summary>
  The MSG structure contains message information from a thread's message queue.
@@ -2442,25 +2493,6 @@ SetWindowLong函数通过改变与特定窗口相关的窗口过程，使系统�
  <param name="dwNewLong">The replacement value.</param>
  <returns>If the function succeeds, the return value is the previous value of the specified 32-bit integer.
  If the function fails, the return value is zero. To get extended error information, call GetLastError. </returns>
-</member>
-<member name="M:eZstd.eZAPI.APIWindows.keybd_event(System.Byte,System.Byte,System.UInt32,System.UIntPtr)">
- <summary>
- 向任意进程发送键盘消息
- </summary>
- <param name="bVk">按键的虚拟键值，如回车键为vk_return, tab键为vk_tab,可以参考常用模拟键的键值对照表，也可以通过System.Windows.Forms.Keys枚举来查看。</param>
- <param name="bScan">扫描码，一般不用设置，用0代替就行；</param>
- <param name="dwFlags">选项标志，如果为keydown则置0即可，如果为keyup则设成数值2，即常数 KEYEVENTF_KEYUP；</param>
- <param name="dwExtraInfo">一般也是置0即可。</param>
- <remarks>
-  调用案例1：
- keybd_event(System.Windows.Forms.Keys.Escape, 0, 0, 0)  ' 按下 ESCAPE键
- keybd_event(System.Windows.Forms.Keys.NumLock, 0, KEYEVENTF_KEYUP, 0)  ' 按键弹起，其中 KEYEVENTF_KEYUP=2 
-  调用案例2：    模拟按下 'ALT+F4'键
- keybd_event(18, 0, 0, 0);
- keybd_event(115, 0, 0, 0);
- keybd_event(115, 0, KEYEVENTF_KEYUP, 0); 
- keybd_event(18, 0, KEYEVENTF_KEYUP, 0);
-</remarks>
 </member>
 <member name="T:eZstd.eZAPI.My.Resources.Resources">
 <summary>
