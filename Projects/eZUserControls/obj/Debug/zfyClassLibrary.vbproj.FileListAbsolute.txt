@@ -1,9 +1,0 @@
-F:\Documents\A软件学习\!编程\Visual Basic.NET\eZstd\bin\zfyClassLibrary.exe
-F:\Documents\A软件学习\!编程\Visual Basic.NET\eZstd\bin\zfyClassLibrary.pdb
-F:\Documents\A软件学习\!编程\Visual Basic.NET\eZstd\bin\zfyClassLibrary.xml
-F:\Documents\A软件学习\!编程\Visual Basic.NET\eZstd\Projects\eZUserControls\obj\Debug\zfyClassLibrary.Resources.resources
-F:\Documents\A软件学习\!编程\Visual Basic.NET\eZstd\Projects\eZUserControls\obj\Debug\zfyClassLibrary.myDataGridView.resources
-F:\Documents\A软件学习\!编程\Visual Basic.NET\eZstd\Projects\eZUserControls\obj\Debug\zfyClassLibrary.vbproj.GenerateResource.Cache
-F:\Documents\A软件学习\!编程\Visual Basic.NET\eZstd\Projects\eZUserControls\obj\Debug\zfyClassLibrary.exe
-F:\Documents\A软件学习\!编程\Visual Basic.NET\eZstd\Projects\eZUserControls\obj\Debug\zfyClassLibrary.xml
-F:\Documents\A软件学习\!编程\Visual Basic.NET\eZstd\Projects\eZUserControls\obj\Debug\zfyClassLibrary.pdb
