@@ -1,0 +1,14 @@
+D:\GithubProjects\eZstd\Projects\eZexcelAPI\obj\Debug\eZexcelAPI.csproj.GenerateResource.Cache
+D:\GithubProjects\eZstd\bin\eZexcelAPI.dll
+D:\GithubProjects\eZstd\bin\eZexcelAPI.pdb
+D:\GithubProjects\eZstd\bin\eZexcelAPI.xml
+D:\GithubProjects\eZstd\Projects\eZexcelAPI\obj\Debug\eZexcelAPI.dll
+D:\GithubProjects\eZstd\Projects\eZexcelAPI\obj\Debug\eZexcelAPI.pdb
+D:\GithubProjects\eZstd\Projects\eZexcelAPI\obj\Debug\eZexcelAPI.Properties.Resources.resources
+D:\Projects\Zengfy\eZstd\bin\eZexcelAPI.dll
+D:\Projects\Zengfy\eZstd\bin\eZexcelAPI.pdb
+D:\Projects\Zengfy\eZstd\bin\eZexcelAPI.xml
+D:\Projects\Zengfy\eZstd\Projects\eZexcelAPI\obj\Debug\eZexcelAPI.Properties.Resources.resources
+D:\Projects\Zengfy\eZstd\Projects\eZexcelAPI\obj\Debug\eZexcelAPI.csproj.GenerateResource.Cache
+D:\Projects\Zengfy\eZstd\Projects\eZexcelAPI\obj\Debug\eZexcelAPI.dll
+D:\Projects\Zengfy\eZstd\Projects\eZexcelAPI\obj\Debug\eZexcelAPI.pdb

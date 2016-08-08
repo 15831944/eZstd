@@ -1,0 +1,17 @@
+D:\GithubProjects\eZstd\Projects\eZUserControls\obj\Debug\Properties.Resources.resources
+D:\GithubProjects\eZstd\Projects\eZUserControls\obj\Debug\eZstd.UserControls.eZDataGridView.resources
+D:\GithubProjects\eZstd\Projects\eZUserControls\obj\Debug\eZstd.csproj.GenerateResource.Cache
+D:\GithubProjects\eZstd\bin\eZUserControls.dll
+D:\GithubProjects\eZstd\bin\eZUserControls.pdb
+D:\GithubProjects\eZstd\bin\eZUserControls.xml
+D:\GithubProjects\eZstd\Projects\eZUserControls\obj\Debug\eZUserControls.dll
+D:\GithubProjects\eZstd\Projects\eZUserControls\obj\Debug\eZUserControls.pdb
+D:\Projects\Zengfy\eZstd\Projects\eZUserControls\obj\Debug\eZstd.csproj.GenerateResource.Cache
+D:\Projects\Zengfy\eZstd\bin\eZstd.dll
+D:\Projects\Zengfy\eZstd\bin\eZstd.pdb
+D:\Projects\Zengfy\eZstd\Projects\eZUserControls\obj\Debug\eZstd.Properties.Resources.resources
+D:\Projects\Zengfy\eZstd\Projects\eZUserControls\obj\Debug\eZstd.dll
+D:\Projects\Zengfy\eZstd\Projects\eZUserControls\obj\Debug\eZstd.pdb
+D:\Projects\Zengfy\eZstd\bin\eZstd.xml
+D:\Projects\Zengfy\eZstd\Projects\eZUserControls\obj\Debug\eZstd.UserControl.eZDataGridView.resources
+D:\Projects\Zengfy\eZstd\Projects\eZUserControls\obj\Debug\eZstd.csprojResolveAssemblyReference.cache
