@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using eZstd.MatrixPack;
 
 namespace eZstd.Geometry
 {
@@ -34,10 +35,51 @@ namespace eZstd.Geometry
         /// </summary>
         public readonly bool InfiniteLength;
 
+        /// <summary> 此射线所对应的无限长的直线 </summary>
+        public readonly Line3D Line;
+
         #endregion
+        #region ---   构造函数
 
         /// <summary>
-        /// 
+        /// 创建一条位于空间直角坐标系的坐标轴上的单位长度的射线
+        /// </summary>
+        /// <param name="axis">射线所在的坐标轴。其值可取1、2、3，分别代表x、y、z轴</param>
+        /// <param name="infiniteLength">如果为true，则此射线为无限长的，如果为false，则此射线是有限长度的，而且长度为1。</param>
+        public Ray3D(byte axis, bool infiniteLength)
+        {
+            Origin = new XYZ();
+            switch (axis)
+            {
+                case 1: EndPoint = new XYZ(1, 0, 0); break;
+                case 2: EndPoint = new XYZ(0, 1, 0); break;
+                case 3: EndPoint = new XYZ(0, 0, 1); break;
+            }
+            Direction = EndPoint - Origin;
+            InfiniteLength = infiniteLength;
+
+            // 此射线所对应的无限长的直线
+            Line = new Line3D(Origin, Direction);
+        }
+
+        /// <summary>
+        /// 一条从起点指向终点的有限长射线
+        /// </summary>
+        /// <param name="startPoint"></param>
+        /// <param name="endPoint"></param>
+        public Ray3D(XYZ startPoint, XYZ endPoint)
+        {
+            Origin = startPoint;
+            Direction = endPoint - startPoint;
+            EndPoint = endPoint;
+            InfiniteLength = false;
+
+            // 此射线所对应的无限长的直线
+            Line = new Line3D(Origin, Direction);
+        }
+
+        /// <summary>
+        /// 构造函数
         /// </summary>
         /// <param name="origin"></param>
         /// <param name="direction"></param>
@@ -49,19 +91,44 @@ namespace eZstd.Geometry
             Direction = direction;
             EndPoint = origin + direction;
             InfiniteLength = infiniteLength;
+
+            // 此射线所对应的无限长的直线
+            Line = new Line3D(origin, direction);
         }
-        
+        #endregion
+
         /// <summary> 两条射线是否在同一个三维平面上 </summary>
         /// <param name="ray2"></param>
         /// <returns></returns>
         public bool IsCoplanarWith(Ray3D ray2)
         {
-            XYZ v_r1r2 = ray2.Origin - Origin;
-            XYZ v_d1 = v_r1r2.CrossProduct(Direction);
-            XYZ v_d2 = v_r1r2.CrossProduct(ray2.Direction);
+            return Line.IsCoplanarWith(ray2.Line);
+        }
 
-            // 如果 v_d1 与 v_d2 的方向共线，则此两条射线共面
-            return v_d1.IsCollinearWith(v_d2);
+        #region ---   两条空间射线的交点
+
+        /// <summary>
+        /// 两个指向器在平面上是否能够相交，如果能，则返回其交点坐标；如果两射线平行，则不能相交，此时返回 null
+        /// </summary>
+        /// <param name="ray2">用来判断相交的另一条射线</param>
+        /// <returns></returns>
+        public XYZ IntersectWith(Ray3D ray2)
+        {
+            // 先判断两条射线所对应的无限长的直线在三维平面中的交点
+            if (Direction.IsCollinearWith(ray2.Direction))
+            {
+                // 平行向量不可能相交
+                return null;
+            }
+            // 两直线的交点
+            XYZ intersectPoint;
+            intersectPoint = Line.GetIntersectPointWith(ray2.Line);
+            if (intersectPoint == null)
+            {
+                return null;
+            }
+            // 再判断这两条射线的起止范围是否包含了此交点
+            return (Contains(intersectPoint) && ray2.Contains(intersectPoint)) ? intersectPoint : null;
         }
 
         /// <summary>
@@ -99,5 +166,7 @@ namespace eZstd.Geometry
 
             return true;
         }
+
+        #endregion
     }
 }

@@ -12,3 +12,11 @@ D:\Projects\Zengfy\eZstd\Projects\eZexcelAPI\obj\Debug\eZexcelAPI.Properties.Res
 D:\Projects\Zengfy\eZstd\Projects\eZexcelAPI\obj\Debug\eZexcelAPI.csproj.GenerateResource.Cache
 D:\Projects\Zengfy\eZstd\Projects\eZexcelAPI\obj\Debug\eZexcelAPI.dll
 D:\Projects\Zengfy\eZstd\Projects\eZexcelAPI\obj\Debug\eZexcelAPI.pdb
+F:\ProgrammingCases\GitHubProjects\eZstd\bin\eZexcelAPI.dll
+F:\ProgrammingCases\GitHubProjects\eZstd\bin\eZexcelAPI.pdb
+F:\ProgrammingCases\GitHubProjects\eZstd\bin\eZexcelAPI.xml
+F:\ProgrammingCases\GitHubProjects\eZstd\Projects\eZexcelAPI\obj\Debug\eZexcelAPI.csprojResolveAssemblyReference.cache
+F:\ProgrammingCases\GitHubProjects\eZstd\Projects\eZexcelAPI\obj\Debug\eZexcelAPI.Properties.Resources.resources
+F:\ProgrammingCases\GitHubProjects\eZstd\Projects\eZexcelAPI\obj\Debug\eZexcelAPI.csproj.GenerateResource.Cache
+F:\ProgrammingCases\GitHubProjects\eZstd\Projects\eZexcelAPI\obj\Debug\eZexcelAPI.dll
+F:\ProgrammingCases\GitHubProjects\eZstd\Projects\eZexcelAPI\obj\Debug\eZexcelAPI.pdb

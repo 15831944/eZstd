@@ -23,11 +23,6 @@ namespace eZstd.Geometry
         /// </summary>
         public readonly XY Direction;
 
-        /// <summary> 直线方程 y = kx + b 中的斜率参数k </summary>
-        public readonly double k;
-        /// <summary> 直线方程 y = kx + b 中的截距参数b </summary>
-        public readonly double b;
-
         /// <summary>
         /// 有限长度的射线的终点坐标
         /// </summary>
@@ -39,7 +34,47 @@ namespace eZstd.Geometry
         /// </summary>
         public readonly bool InfiniteLength;
 
+        /// <summary> 此射线所对应的无限长的直线 </summary>
+        public readonly Line2D Line;
         #endregion
+
+        #region ---   构造函数
+
+        /// <summary>
+        /// 创建一条位于空间直角坐标系的坐标轴上的单位长度的射线
+        /// </summary>
+        /// <param name="axis">射线所在的坐标轴。其值可取1、2，分别代表x、y轴</param>
+        /// <param name="infiniteLength">如果为true，则此射线为无限长的，如果为false，则此射线是有限长度的，而且长度为1。</param>
+        public Ray2D(byte axis, bool infiniteLength)
+        {
+            Origin = new XY();
+            switch (axis)
+            {
+                case 1: EndPoint = new XY(1, 0); break;
+                case 2: EndPoint = new XY(0, 1); break;
+            }
+            Direction = EndPoint - Origin;
+            InfiniteLength = infiniteLength;
+
+            // 此射线所对应的无限长的直线
+            Line = new Line2D(Origin, Direction);
+        }
+
+        /// <summary>
+        /// 创建一条从起点指向终点的有限长的射线
+        /// </summary>
+        /// <param name="startPoint"></param>
+        /// <param name="endPoint"></param>
+        public Ray2D(XY startPoint, XY endPoint)
+        {
+            Origin = startPoint;
+            Direction = endPoint - startPoint;
+            EndPoint = endPoint;
+            InfiniteLength = false;
+
+            // 此射线所对应的无限长的直线
+            Line = new Line2D(Origin, Direction);
+        }
 
         /// <summary>
         /// 
@@ -55,42 +90,34 @@ namespace eZstd.Geometry
             EndPoint = origin + direction;
             InfiniteLength = infiniteLength;
 
-            // 直线方程 y = kx + b
-            k = direction.Y / direction.X;
-            b = origin.Y - k * origin.X;
+            // 此射线所对应的无限长的直线
+            Line = new Line2D(origin, direction);
         }
 
+        #endregion
+
         /// <summary>
-        /// 两个指向器在平面上是否能够相交，如果能，则返回其交点坐标
+        /// 两个指向器在平面上是否能够相交，如果能，则返回其交点坐标；如果两射线平行，则不能相交，此时返回 null
         /// </summary>
-        /// <param name="pointer2">用来判断相交的另一条射线</param>
-        /// <param name="intersectPoint"> 两条射线所对应的直线的直线的交点，如果两射线平行，则不能相交，此时返回 null </param>
+        /// <param name="ray2">用来判断相交的另一条射线</param>
         /// <returns></returns>
-        public bool CanIntersectWith(Ray2D pointer2, out XY intersectPoint)
+        public XY IntersectWith(Ray2D ray2)
         {
             // 先判断两条射线所对应的无限长的直线在二维平面中的交点
-            if (Direction.IsAlmostEqualTo(pointer2.Direction, isPoint: false))
+            if (Direction.IsCollinearWith(ray2.Direction))
             {
                 // 平行向量不可能相交
-                intersectPoint = null;
-                return false;
+                return null;
             }
             // 两直线的交点
-            intersectPoint = GetIntersectPoint(k, b, pointer2.k, pointer2.b);
-
+            XY intersectPoint = null;
+            intersectPoint = Line.GetIntersectPointWith(ray2.Line);
+            if (intersectPoint == null)
+            {
+                return null;
+            }
             // 再判断这两条射线的起止范围是否包含了此交点
-
-            return (Contains(intersectPoint) && pointer2.Contains(intersectPoint));
-        }
-
-        /// <summary>
-        /// 二维平面内直线 y = k1x + b1 与 y = k2x + b2 的交点
-        /// </summary>
-        /// <returns></returns>
-        private static XY GetIntersectPoint(double k1, double b1, double k2, double b2)
-        {
-            return new XY(x: (b2 - b1) / (k1 - k2),
-                y: (b1 * k2 - b2 * k1) / (k2 - k1));
+            return (Contains(intersectPoint) && ray2.Contains(intersectPoint)) ? intersectPoint : null;
         }
 
         /// <summary>

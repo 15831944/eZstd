@@ -7,20 +7,20 @@ namespace eZstd.MatrixPack
 {
 	using System;
 
-	/// <summary>
-	/// 	Singular Value Decomposition for a rectangular matrix.
-	/// </summary>
-	/// <remarks>
-	///	  For an m-by-n matrix <c>A</c> with <c>m >= n</c>, the singular value decomposition is
-	///   an m-by-n orthogonal matrix <c>U</c>, an n-by-n diagonal matrix <c>S</c>, and
-	///   an n-by-n orthogonal matrix <c>V</c> so that <c>A = U * S * V'</c>.
-	///   The singular values, <c>sigma[k] = S[k,k]</c>, are ordered so that
-	///   <c>sigma[0] >= sigma[1] >= ... >= sigma[n-1]</c>.
-	///   The singular value decompostion always exists, so the constructor will
-	///   never fail. The matrix condition number and the effective numerical
-	///   rank can be computed from this decomposition.
-	/// </remarks>
-	public class SingularValueDecomposition
+    /// <summary>
+    /// 	Singular Value Decomposition£®∆Ê“Ï÷µ∑÷Ω‚£© for a rectangular matrix.
+    /// </summary>
+    /// <remarks>
+    ///	  For an m-by-n matrix <c>A</c> with <c>m >= n</c>, the singular value decomposition is
+    ///   an m-by-n orthogonal matrix <c>U</c>, an n-by-n diagonal matrix <c>S</c>, and
+    ///   an n-by-n orthogonal matrix <c>V</c> so that <c>A = U * S * V'</c>.
+    ///   The singular values, <c>sigma[k] = S[k,k]</c>, are ordered so that
+    ///   <c>sigma[0] >= sigma[1] >= ... >= sigma[n-1]</c>.
+    ///   The singular value decompostion always exists, so the constructor will
+    ///   never fail. The matrix condition number and the effective numerical
+    ///   rank can be computed from this decomposition.
+    /// </remarks>
+    public class SingularValueDecomposition
 	{
 		private Matrix U;
 		private Matrix V;

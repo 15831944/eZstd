@@ -8,7 +8,9 @@ namespace eZstd.MatrixPack
     using System;
     using System.IO;
 
-    /// <summary>Matrix provides the fundamental operations of numerical linear algebra.</summary>
+    /// <summary>Matrix provides the fundamental operations of numerical linear algebra. 
+    /// Matrix 类代表了任意形态（比如一维向量、方阵等）的 m*n 二维矩阵。</summary>
+    /// <remarks> Matrix 代表了任意形态（比如一维向量、方阵等）的 m*n 二维矩阵。</remarks>
     public class Matrix
     {
         /// <summary> 二维嵌套数组，第一个下标代表行号，第二个下标代表列号。 </summary>
@@ -56,14 +58,22 @@ namespace eZstd.MatrixPack
         public Matrix(double[][] data)
         {
             this.rows = data.Length;
-            this.columns = data[0].Length;
-
-            for (int i = 0; i < rows; i++)
+            if (rows == 0)
             {
-                if (data[i].Length != columns)
+                this.columns = 0;
+            }
+            else
+            {
+                this.columns = data[0].Length;
+
+                for (int i = 0; i < rows; i++)
                 {
-                    throw new ArgumentException();
+                    if (data[i].Length != columns)
+                    {
+                        throw new ArgumentException("矩阵中每一行所含的元素个数必须相同。");
+                    }
                 }
+
             }
 
             this.data = data;
@@ -137,12 +147,13 @@ namespace eZstd.MatrixPack
             {
                 this.data[i][j] = value;
             }
-
             get
             {
                 return this.data[i][j];
             }
         }
+
+        #region ---   Submatrix 提取子矩阵
 
         /// <summary>Returns a sub matrix extracted from the current matrix.</summary>
         /// <param name="i0">Start row index</param>
@@ -222,33 +233,93 @@ namespace eZstd.MatrixPack
         }
 
         /// <summary>Returns a sub matrix extracted from the current matrix.</summary>
-        /// <param name="r">Array of row indices</param>
-        /// <param name="j0">Start column index</param>
-        /// <param name="j1">End column index</param>
-        public Matrix Submatrix(int[] r, int j0, int j1)
+        /// <param name="rowIndices">要从父矩阵中提取出来的行号。Array of row indices</param>
+        /// <param name="startColumn">Start column index</param>
+        /// <param name="endColumn">End column index</param>
+        public Matrix Submatrix(int[] rowIndices, int startColumn, int endColumn)
         {
-            if ((j0 > j1) || (j0 < 0) || (j0 >= columns) || (j1 < 0) || (j1 >= columns))
+            if ((startColumn > endColumn) || (startColumn < 0) || (startColumn >= columns) || (endColumn < 0) || (endColumn >= columns))
             {
                 throw new ArgumentException();
             }
 
-            Matrix X = new Matrix(r.Length, j1 - j0 + 1);
+            Matrix X = new Matrix(rowIndices.Length, endColumn - startColumn + 1);
             double[][] x = X.Array;
-            for (int i = 0; i < r.Length; i++)
+            for (int i = 0; i < rowIndices.Length; i++)
             {
-                for (int j = j0; j <= j1; j++)
+                for (int j = startColumn; j <= endColumn; j++)
                 {
-                    if ((r[i] < 0) || (r[i] >= this.rows))
+                    if ((rowIndices[i] < 0) || (rowIndices[i] >= this.rows))
                     {
                         throw new ArgumentException();
                     }
 
-                    x[i][j - j0] = data[r[i]][j];
+                    x[i][j - startColumn] = data[rowIndices[i]][j];
                 }
             }
 
             return X;
         }
+
+        #endregion
+
+        #region ---   GetVector 提取某一行或一列的向量
+
+        /// <summary> 提取矩阵中的某一列的数据 </summary>
+        /// <param name="column">要提取的列的列号</param>
+        public double[] GetColumn(int column)
+        {
+            double[] vec = new double[rows];
+
+            for (int i = 0; i < rows; i++)
+            {
+                vec[i] = this[i, column];
+            }
+            return vec;
+        }
+
+        /// <summary> 提取矩阵中的某一行的数据 </summary>
+        /// <param name="row">要提取的行的行号</param>
+        public double[] GetRow(int row)
+        {
+            double[] vec = new double[columns];
+
+            for (int i = 0; i < columns; i++)
+            {
+                vec[i] = this[row, i];
+            }
+            return vec;
+        }
+
+        /// <summary> 提取矩阵中的某一列中指定行的数据 </summary>
+        /// <param name="rowIndices">要提取行的行号集合</param>
+        /// <param name="column">要提取的列的列号</param>
+        public double[] GetVector(int[] rowIndices, int column)
+        {
+            double[] vec = new double[rowIndices.Length];
+
+            for (int i = 0; i < rowIndices.Length; i++)
+            {
+                vec[i] = this[rowIndices[i], column];
+            }
+            return vec;
+        }
+
+        /// <summary> 提取矩阵中的某一行中指定列的数据 </summary>
+        /// <param name="columnIndices">要提取列的列号集合</param>
+        /// <param name="row">要提取的行的行号</param>
+        public double[] GetVector(int row, int[] columnIndices)
+        {
+            double[] vec = new double[columnIndices.Length];
+
+            for (int i = 0; i < columnIndices.Length; i++)
+            {
+                vec[i] = this[row, columnIndices[i]];
+            }
+            return vec;
+        }
+
+        #endregion
 
         /// <summary>Creates a copy of the matrix.</summary>
         public Matrix Clone()
@@ -339,6 +410,8 @@ namespace eZstd.MatrixPack
                 return f;
             }
         }
+
+        #region ---   矩阵运算符
 
         /// <summary>Unary minus.</summary>
         public static Matrix operator -(Matrix a)
@@ -467,6 +540,8 @@ namespace eZstd.MatrixPack
             return X;
         }
 
+        #endregion
+
         /*
         /// <summary>Adds a matrix to the current matrix.</summary>
         public void Add(Matrix A)
@@ -497,7 +572,10 @@ namespace eZstd.MatrixPack
         }
         */
 
-        /// <summary>Returns the LHS solution vetor if the matrix is square or the least squares solution otherwise.</summary>
+        /// <summary> 对矩阵方程 A * X = B 进行求解。</summary>
+        /// <param name="rhs">right hand side of the equation A * X = B .线性方程 A * X = B ，的右手边的参数，即 B </param>
+        /// <returns> 如果矩阵A为方阵，则返回LU分解的求解结果，如果不是方阵，则返回QR分解的最小二乘解。
+        /// Returns the LHS (left hand side) solution vetor if the matrix is square or the least squares solution otherwise.</returns>
         public Matrix Solve(Matrix rhs)
         {
             return (rows == columns) ? new LuDecomposition(this).Solve(rhs) : new QrDecomposition(this).Solve(rhs);
@@ -512,7 +590,7 @@ namespace eZstd.MatrixPack
             }
         }
 
-        /// <summary>Determinant if matrix is square.</summary>
+        /// <summary>Determinant if matrix is square. 方阵的行列式 </summary>
         public double Determinant
         {
             get
@@ -551,7 +629,8 @@ namespace eZstd.MatrixPack
             return X;
         }
 
-        /// <summary>Returns a diagonal matrix of the given size.</summary>
+        /// <summary>Returns a diagonal matrix（对角矩阵：只有i=j的位置的元素值才不为0） of the given size.</summary>
+        /// <param name="value">对角位置的元素的值。</param>
         public static Matrix Diagonal(int rows, int columns, double value)
         {
             Matrix X = new Matrix(rows, columns);
@@ -574,7 +653,7 @@ namespace eZstd.MatrixPack
                 for (int i = 0; i < rows; i++)
                 {
                     for (int j = 0; j < columns; j++)
-                        writer.Write(data[i][j] + " ");
+                        writer.Write(data[i][j] + "\t");
 
                     writer.WriteLine();
                 }
