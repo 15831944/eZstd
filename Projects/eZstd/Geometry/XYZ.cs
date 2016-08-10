@@ -31,12 +31,24 @@ namespace eZstd.Geometry
 
         #endregion
 
+        #region ---   构造函数
+
+        /// <summary> 默认点 (0, 0, 0) </summary>
+        public XYZ()
+        {
+            this.X = 0;
+            this.Y = 0;
+            this.Z = 0;
+        }
+
         public XYZ(double x, double y, double z)
         {
             this.X = x;
             this.Y = y;
             this.Z = z;
         }
+
+        #endregion
 
         public override string ToString()
         {
@@ -85,6 +97,24 @@ namespace eZstd.Geometry
             return Substract(point2, this);
         }
 
+        /// <summary>
+        /// 比较两个点是否重合（容差为整个系统的容差 AngleTolerance）
+        /// </summary>
+        /// <param name="point2"></param>
+        public bool IsAlmostEqualTo(XYZ point2)
+        {
+            return this.DistanceTo(point2) <= VertexTolerance;
+        }
+
+        /// <summary>
+        /// 比较两个点是否重合
+        /// </summary>
+        /// <param name="point2"></param>
+        /// <param name="tolerance"> 用户指定的距离容差 </param>
+        public bool IsAlmostEqualTo(XYZ point2, double tolerance)
+        {
+            return this.DistanceTo(point2) <= tolerance;
+        }
         #endregion
 
         #region ---   空间矢量的方法
@@ -158,81 +188,31 @@ namespace eZstd.Geometry
             return Math.Acos(this.DotProduct(v2) / this.GetLength() / v2.GetLength());
         }
 
-        /// <summary> 两个方向矢量是否共线（方向相同或者相反）。 </summary>
+
+        /// <summary> 两个方向矢量是否共线（方向相同或者相反）。容差为整个系统的容差 AngleTolerance。</summary>
         /// <param name="v2"></param>
         /// <returns></returns>
         public bool IsCollinearWith(XYZ v2)
         {
-            return this.IsAlmostEqualTo(v2, false) || this.IsAlmostEqualTo(v2.Reverse(), false);
+            if ((this.AngleTo(v2) <= AngleTolerance) || (this.AngleTo(v2.Reverse()) <= AngleTolerance))
+            {
+                return true;
+            }
+            return false;
         }
 
-        /// <summary> 两个方向矢量是否共线（方向相同或者相反）。 </summary>
+        /// <summary> 两个方向矢量是否共线（方向相同或者相反）。。容差为用户指定的角度容差。 </summary>
         /// <param name="v2"></param>
-        /// <param name="tolerance"></param>
+        /// <param name="tolerance">用户指定的角度容差</param>
         /// <returns></returns>
         public bool IsCollinearWith(XYZ v2, double tolerance)
         {
-            return this.IsAlmostEqualTo(v2, false, tolerance) || this.IsAlmostEqualTo(v2.Reverse(), false, tolerance);
-        }
-
-        #endregion
-
-        #region ---   空间矢量 或者 空间点 的方法
-
-        /// <summary>
-        /// 比较两个点是否重合，或者两个向量的方向是否相同。（容差为整个系统的容差 AngleTolerance 或 VertexTolerance）
-        /// </summary>
-        /// <param name="node2"></param>
-        /// <param name="isPoint">如果为true，则表示是比较两个点是否重合；如果为false，则表示是比较两个方向向量是否方向相同。</param>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        public bool IsAlmostEqualTo(XYZ node2, bool isPoint)
-        {
-            if (isPoint)
+            if ((this.AngleTo(v2) <= tolerance) || (this.AngleTo(v2.Reverse()) <= tolerance))
             {
-                if (this.DistanceTo(node2) <= VertexTolerance)
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                if (this.AngleTo(node2) <= AngleTolerance)
-                {
-                    return true;
-                }
+                return true;
             }
             return false;
         }
-
-        /// <summary>
-        /// 比较两个点是否重合，或者两个方向向量是否共线
-        /// </summary>
-        /// <param name="node2"></param>
-        /// <param name="isPoint">如果为true，则表示是比较两个点是否重合；如果为false，则表示是比较两个方向向量是否方向相同。</param>
-        /// <param name="tolerance"> 用户指定角度或者距离的容差 </param>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        public bool IsAlmostEqualTo(XYZ node2, bool isPoint, double tolerance)
-        {
-            if (isPoint)
-            {
-                if (this.DistanceTo(node2) <= tolerance)
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                if (this.AngleTo(node2) <= tolerance)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-
         #endregion
 
         #region ---   私有方法
@@ -284,6 +264,5 @@ namespace eZstd.Geometry
         }
 
         #endregion
-
     }
 }

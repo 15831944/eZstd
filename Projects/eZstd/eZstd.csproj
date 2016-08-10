@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FB9B6528-5424-4B7A-AEBA-6733450DC44B}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>eZstd</RootNamespace>
     <AssemblyName>eZstd</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -43,8 +43,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
+    <StartupObject>eZstd.ExeTest</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -72,17 +71,25 @@
   <ItemGroup>
     <Reference Include="mscorlib" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Windows\ShowDialogWinTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\API\Dll.cs" />
@@ -96,15 +103,35 @@
     <Compile Include="API\APIUtils\IO.cs" />
     <Compile Include="API\APIUtils\Windows.cs" />
     <Compile Include="Drawing\ColorUtils.cs" />
+    <Compile Include="ExeTest.cs" />
+    <Compile Include="Miscellaneous\DebugUtils.cs" />
+    <Compile Include="Miscellaneous\Utils.cs" />
+    <Compile Include="Windows\ShowDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\ShowDialogFormTemplate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\ShowDialogFormTemplate.Designer.cs">
+      <DependentUpon>ShowDialogFormTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ShowDialogWin.cs" />
+    <Compile Include="Windows\ShowDialogWinTemplate.xaml.cs">
+      <DependentUpon>ShowDialogWinTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Geometry\Line2D.cs" />
+    <Compile Include="Geometry\Line3D.cs" />
+    <Compile Include="Geometry\Plane4.cs" />
     <Compile Include="Geometry\Ray2D.cs" />
     <Compile Include="Geometry\Ray3D.cs" />
+    <Compile Include="Geometry\Triangle.cs" />
     <Compile Include="Geometry\XY.cs" />
-    <Compile Include="Matrix\CholeskyDecomposition.cs" />
-    <Compile Include="Matrix\EigenvalueDecomposition.cs" />
-    <Compile Include="Matrix\LuDecomposition.cs" />
-    <Compile Include="Matrix\Matrix.cs" />
-    <Compile Include="Matrix\QrDecomposition.cs" />
-    <Compile Include="Matrix\SingularValueDecomposition.cs" />
+    <Compile Include="MatrixPack\CholeskyDecomposition.cs" />
+    <Compile Include="MatrixPack\EigenvalueDecomposition.cs" />
+    <Compile Include="MatrixPack\LuDecomposition.cs" />
+    <Compile Include="MatrixPack\Matrix.cs" />
+    <Compile Include="MatrixPack\QrDecomposition.cs" />
+    <Compile Include="MatrixPack\SingularValueDecomposition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Application.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -120,12 +147,21 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Geometry\XYZ.cs" />
     <Compile Include="UserControl\eZDataGridView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Geometry\XYZ.cs" />
+    <Compile Include="UserControl\eZDataGridViewPaste.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControl\LstbxDisplayAndItem.cs" />
+    <Compile Include="Windows\OwnerWindow.cs" />
+    <Compile Include="Windows\WindowsUtil.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Windows\ShowDialogFormTemplate.resx">
+      <DependentUpon>ShowDialogFormTemplate.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -134,6 +170,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControl\eZDataGridView.resx">
       <DependentUpon>eZDataGridView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControl\eZDataGridViewPaste.resx">
+      <DependentUpon>eZDataGridViewPaste.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +186,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
