@@ -19,7 +19,7 @@ namespace eZexcelAPI
         /// <param name="SourceRange">对于对Range.Areas.Item(1)中的单元格区域进行操作</param>
         /// <param name="Corner">要返回哪一个角落的单元格</param>
         /// <returns></returns>
-        public static Microsoft.Office.Interop.Excel.Range Ex_CornerCell(this Microsoft.Office.Interop.Excel.Range SourceRange, CornerIndex Corner = CornerIndex.BottomRight)
+        public static Range Ex_CornerCell(this Range SourceRange, CornerIndex Corner = CornerIndex.BottomRight)
         {
             Range myCornerCell = null;
             //
@@ -54,7 +54,7 @@ namespace eZexcelAPI
         /// <returns></returns>
         /// <remarks>在选择一个单元格范围时，有时为了界面操作简单，往往会选择一整列或者一整行，但是并不是要对基本所有的单元格进行操作，
         /// 而只需要操作其中有数据的那些区域。此函数即是将选择的整行或者整列的单元格收缩到有数据的范围内。</remarks>
-        public static Range Ex_ShrinkedRange(this Microsoft.Office.Interop.Excel.Range rg)
+        public static Range Ex_ShrinkedRange(this Range rg)
         {
             rg = rg.Areas[1];
             int ColCount = rg.Columns.Count;
