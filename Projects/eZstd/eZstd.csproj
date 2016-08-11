@@ -102,9 +102,15 @@
     <Compile Include="API\API\UnClassified.cs" />
     <Compile Include="API\APIUtils\IO.cs" />
     <Compile Include="API\APIUtils\Windows.cs" />
+    <Compile Include="Data\ExcelDBHelper.cs" />
+    <Compile Include="Data\DataTableHelper.cs" />
+    <Compile Include="Data\sqlDataSetHelper.cs" />
+    <Compile Include="Data\SqlModelHelper.cs" />
     <Compile Include="Drawing\ColorUtils.cs" />
     <Compile Include="ExeTest.cs" />
+    <Compile Include="Miscellaneous\AssemblyCompiler.cs" />
     <Compile Include="Miscellaneous\DebugUtils.cs" />
+    <Compile Include="Miscellaneous\Serializer.cs" />
     <Compile Include="Miscellaneous\Utils.cs" />
     <Compile Include="Windows\ShowDialogForm.cs">
       <SubType>Form</SubType>

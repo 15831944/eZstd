@@ -15,6 +15,8 @@ namespace eZstd
         [STAThread]
         public static void Main()
         {
+            var t = Array.CreateInstance(typeof (int), 1, 2, 3);
+
             m4();
         }
 

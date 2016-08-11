@@ -11,8 +11,6 @@ namespace eZstd.Windows
     /// 用在 ShowDialogWin 或者 ShowDialogForm 类中。
     /// 当 DialogForm 被隐藏并执行完与Revit交互的hideProc方法后被触发。此事件响应完会即会立即执行  System.Windows.Window.ShowDialog();
     /// </summary>
-    /// <param name="returnSucceeded"> hideProc 方法是否成功执行而且没有报错。如果为false，
-    /// 表示 hideProc 方法内部出现了报错，则对应的returnedValue为null。</param>
     /// <param name="returnedValue"> hideProc 方法执行完成后的返回值，如果 hideProc 方法没有返回值，则 returnedValue 为 null。</param>
     public delegate void HideMethodReturnedProc(object returnedValue);
 
