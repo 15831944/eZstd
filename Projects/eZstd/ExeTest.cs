@@ -1,34 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Windows.Forms;
+using eZstd.Drawing;
 using eZstd.Geometry;
 using eZstd.MatrixPack;
 using eZstd.Windows;
 
 namespace eZstd
 {
+    public class parent
+    {
+    }
+
+    public class child : parent
+    {
+    }
+    public class grandChild : child { }
     public class ExeTest
     {
         [STAThread]
         public static void Main()
         {
-            var t = Array.CreateInstance(typeof (int), 1, 2, 3);
 
-            m4();
+            grandChild c = new grandChild();
+            parent p = new parent();
+
+            Type tParent = p.GetType();
+            Type tChild = c.GetType();
+         
+            var b1 = p.GetType().IsInstanceOfType(c);
+            var b2 = tChild == tParent;
         }
 
+        public static void ShowForm()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            //
+
+            Application.Run(new Form1());
+        }
+
+        #region ---   各种测试
 
         public static void m1()
         {
             double[][] dataA = new double[][]
-     {
+            {
                 new double[] {8.1,2.3,-1.5},
                 new double[] {0.5,-6.23,0.87},
                 new double[] {2.5,1.5,10.2},
-     };
+            };
 
             double[][] dataB = new double[][]
             {
@@ -84,5 +112,13 @@ namespace eZstd
             ShowDialogWinTemplate t = new ShowDialogWinTemplate();
             var b = t.ShowDialog();
         }
+
+        public static void m5()
+        {
+            DrawShapesTest dst = new DrawShapesTest();
+            dst.ShowDialog();
+        }
+
+        #endregion
     }
 }

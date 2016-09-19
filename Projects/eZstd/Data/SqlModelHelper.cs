@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 
-namespace stdOldW.DAL
+namespace eZstd.Data
 {
     /// <summary>
     /// 以数据实体为基础的三层架构的数据库通用方法
