@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
@@ -102,6 +103,18 @@ namespace eZstd.Miscellaneous
         /// <param name="title"> 报错对话框的标题 </param>
         public static void ShowDebugCatch(Exception ex, string message, string title = "出错")
         {
+            string errorMessage = GetDebugMessage(ex, message);
+            MessageBox.Show(errorMessage, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        /// <summary>
+        /// 在调试阶段，为每一种报错显示对应的报错信息及出错位置。
+        /// </summary>
+        /// <param name="ex"> Catch 块中的 Exception 对象</param>
+        /// <param name="message">报错信息提示</param>
+        /// <returns></returns>
+        public static string GetDebugMessage(Exception ex, string message)
+        {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(message);
             sb.AppendLine(ex.Message);
@@ -117,9 +130,7 @@ namespace eZstd.Miscellaneous
             }
             // 最底层的出错位置
             sb.AppendLine("\r\n" + exStack.StackTrace);
-
-            MessageBox.Show(sb.ToString(), title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return sb.ToString();
         }
-       
     }
 }

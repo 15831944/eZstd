@@ -13,109 +13,8 @@ namespace eZstd.Data
     /// 利用ADO.NET连接Excel数据库，并执行相应的操作：
     /// 创建表格，读取数据，写入数据，获取工作簿中的所有工作表名称。
     /// </summary>
-    /// <remarks></remarks>
-    public static class ExcelDBHelper
+    public static class ExcelDbHelper
     {
-        /// <summary>
-        /// 根据指定的字段名创建一个全新的Excel工作表，但是不向其中添加任何数据。
-        /// </summary>
-        /// <param name="conn"></param>
-        /// <param name="sheetName"> 要创建的工作表的名称，不能带后缀$ </param>
-        /// <param name="fields_valueTypes"> 工作表中的每一个字段，以及字段所对应的数据类型。如果不赋值，则只创建出一个工作表，而不创建任何字段。 </param>
-        /// <remarks>在Excel中创建工作表的语句为： "CREATE TABLE Sheet1 ( [Field1] VarChar,[Field2] VarChar)" </remarks>
-        public static void CreateNewSheet(OleDbConnection conn, string sheetName, params string[] fields_valueTypes)
-        {
-            //如果连接已经关闭，则先打开连接
-            if (conn.State == ConnectionState.Closed)
-            {
-                conn.Open();
-            }
-            if (fields_valueTypes == null || fields_valueTypes.Length == 0)
-            {
-                // 向Excel中创建一个无字段的工作表时，虽然不会报错，但也不会生效。
-                throw new InvalidCastException("请至少为工作表中添加一个字段");
-            }
-
-            if (fields_valueTypes.Length%2 != 0)
-            {
-                throw new InvalidCastException("输入的字段与数据类型的数目不对应");
-            }
-
-            // 在Excel中创建工作表的语句为： "CREATE TABLE Sheet1 ( [Field1] VarChar,[Field2] VarChar)" 
-            StringBuilder sb = new StringBuilder();
-            sb.Append($"CREATE TABLE [{sheetName}] ([{fields_valueTypes[0]}] {fields_valueTypes[1]}");
-            //
-            for (int pair = 2; pair < fields_valueTypes.Length; pair += 2)
-            {
-                sb.Append($",[{fields_valueTypes[pair]}] {fields_valueTypes[pair + 1]}");
-            }
-            sb.Append(@")");
-
-            ExecuteNoneQuery(conn, sb.ToString());
-        }
-
-        /// <summary>
-        /// 根据指定的DataTable 创建一个全新的 Excel 工作表，而不添加任何数据。
-        /// </summary>
-        /// <param name="conn"></param>
-        /// <param name="tableSource"> 工作表名称即 tableSource.TableName；工作表中每一个字段的名称即tableSource中每一列的列名 </param>
-        public static void CreateNewSheet(OleDbConnection conn, DataTable tableSource)
-        {
-            //如果连接已经关闭，则先打开连接
-            if (conn.State == ConnectionState.Closed)
-            {
-                conn.Open();
-            }
-
-            string[] fields_valueTypes = new string[tableSource.Columns.Count*2];
-
-            for (int i = 0; i < tableSource.Columns.Count; i++)
-            {
-                fields_valueTypes[i*2] = tableSource.Columns[i].ColumnName;
-                fields_valueTypes[i*2 + 1] = ConvertExcelDataType(tableSource.Columns[i].DataType);
-                    //"char(255)";//tableSource.Columns[i].DataType.ToString();
-            }
-
-            // 创建全新的Excel工作表
-            CreateNewSheet(conn, tableSource.TableName, fields_valueTypes);
-        }
-
-        /// <summary> 对Excel数据库执行非查询SQL语句 </summary>
-        /// <param name="conn"></param>
-        /// <param name="sql"> 用来执行的非查询sql语句</param>
-        /// <remarks></remarks>
-        private static void ExecuteNoneQuery(OleDbConnection conn, string sql)
-        {
-            //如果连接已经关闭，则先打开连接
-            if (conn.State == ConnectionState.Closed)
-            {
-                conn.Open();
-            }
-            if (conn.DataSource != null && IsExcelDataSource(conn.DataSource))
-            {
-                using (OleDbCommand ole_cmd = conn.CreateCommand())
-                {
-                    ole_cmd.CommandText = sql;
-                    try
-                    {
-                        //在工作簿中创建新表格时，Excel工作簿不能处于打开状态
-                        ole_cmd.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("创建Excel文档失败，错误信息： " + ex.Message, "Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("未正确连接到Excel数据库!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-        }
-
         #region Excel 数据库的连接
 
         /// <summary>
@@ -204,6 +103,12 @@ namespace eZstd.Data
                         // 如果是一般的工作表，其返回的工作表名中会以$作为后缀，而Excel中的命名区域也是一种表，但是其表名不含有后缀“$”
                         sheetNames.Add(name);
                     }
+                    else if (name.StartsWith("'") && name.EndsWith("$'"))
+                    {
+                        // 对于Excel工作表中的“TX-TCX8”，通过ADO所得到的工作表名为“'TX-TCX8$'”（注意两边的间引号），
+                        // 但是在通过ADO进行数据提取时，使用的工作表名为“TX-TCX8$”。
+                        sheetNames.Add(name.Substring(1, name.Length - 2));
+                    }
                 }
                 return sheetNames;
             }
@@ -227,10 +132,9 @@ namespace eZstd.Data
             {
                 conn.Open();
             }
-            var dt = conn.GetSchema("Columns", new string[] {null, null, tableName});
+            var dt = conn.GetSchema("Columns", new string[] { null, null, tableName });
             var names = DataTableHelper.GetValue(dt, "COLUMN_NAME");
-            return names.AsEnumerable().Select(r => r.ToString()).ToList();
-            ;
+            return names.AsEnumerable().Select(r => r.ToString()).ToList(); ;
         }
 
         /// <summary>
@@ -246,7 +150,7 @@ namespace eZstd.Data
             {
                 conn.Open();
             }
-            var dt = conn.GetSchema("Columns", new string[] {null, null, tableName});
+            var dt = conn.GetSchema("Columns", new string[] { null, null, tableName });
             MessageBox.Show(dt.Rows.Count.ToString());
             var names = DataTableHelper.GetValue(dt, "DATA_TYPE");
             return names.AsEnumerable().Select(r => r.ToString()).ToList();
@@ -333,7 +237,7 @@ namespace eZstd.Data
 
 
                 //索引数据集中的第一个工作表对象
-                DataTable DataTable = dtSet.Tables[0]; // conn.GetSchema("Tables")
+                System.Data.DataTable DataTable = dtSet.Tables[0]; // conn.GetSchema("Tables")
 
                 //工作表中的数据有8列9行(它的范围与用Worksheet.UsedRange所得到的范围相同。
                 //不一定是写有数据的单元格才算进行，对单元格的格式，如底纹，字号等进行修改的单元格也在其中。)
@@ -392,7 +296,7 @@ namespace eZstd.Data
                 int intTablesCount = dtSet.Tables.Count;
 
                 //索引数据集中的第一个工作表对象
-                DataTable DataTable = dtSet.Tables[0]; // conn.GetSchema("Tables")
+                System.Data.DataTable DataTable = dtSet.Tables[0]; // conn.GetSchema("Tables")
 
                 //工作表中的数据有8列9行(它的范围与用Worksheet.UsedRange所得到的范围相同。
                 //不一定是写有数据的单元格才算进行，对单元格的格式，如底纹，字号等进行修改的单元格也在其中。)
@@ -407,7 +311,7 @@ namespace eZstd.Data
                     object v = DataTable.Rows[i][FieldName];
 
                     // 注意：Convert.IsDBNull(null)所返回的值为false
-                    Data[i] = Convert.IsDBNull(v) ? default(T) : (T) v;
+                    Data[i] = Convert.IsDBNull(v) ? default(T) : (T)v;
                 }
                 return Data;
             }
@@ -489,6 +393,7 @@ namespace eZstd.Data
         /// <param name="sheetName"> 要进行插入的Excel工作表的名称，其格式为“Sheet1$”。请确保此工作表已经存在，而且已经包含与 tableSource 的列名相对应的字段 </param>
         public static void InsertDataTable(OleDbConnection conn, DataTable tableSource, string sheetName)
         {
+
             //如果连接已经关闭，则先打开连接
             if (conn.State == ConnectionState.Closed)
             {
@@ -548,11 +453,111 @@ namespace eZstd.Data
         /// <remarks></remarks>
         public static void InsertToSheet(OleDbConnection conn, string sheetName, string FieldName, object Value)
         {
-            string commandText = "insert into [" + sheetName + "](" + FieldName + ") values(\'" + Value + "\')";
+            string commandText = "insert into [" + sheetName + ("](" + FieldName) + ") values(\'" + Value + "\')";
             ExecuteNoneQuery(conn, commandText);
         }
 
         #endregion
+
+        /// <summary>
+        /// 根据指定的字段名创建一个全新的Excel工作表，但是不向其中添加任何数据。
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="sheetName"> 要创建的工作表的名称，不能带后缀$ </param>
+        /// <param name="fields_valueTypes"> 工作表中的每一个字段，以及字段所对应的数据类型。如果不赋值，则只创建出一个工作表，而不创建任何字段。 </param>
+        /// <remarks>在Excel中创建工作表的语句为： "CREATE TABLE Sheet1 ( [Field1] VarChar,[Field2] VarChar)" </remarks>
+        public static void CreateNewSheet(OleDbConnection conn, string sheetName, params string[] fields_valueTypes)
+        {
+            //如果连接已经关闭，则先打开连接
+            if (conn.State == ConnectionState.Closed)
+            {
+                conn.Open();
+            }
+            if (fields_valueTypes == null || fields_valueTypes.Length == 0)
+            {
+                // 向Excel中创建一个无字段的工作表时，虽然不会报错，但也不会生效。
+                throw new InvalidCastException("请至少为工作表中添加一个字段");
+            }
+
+            if (fields_valueTypes.Length % 2 != 0)
+            {
+                throw new InvalidCastException("输入的字段与数据类型的数目不对应");
+            }
+
+            // 在Excel中创建工作表的语句为： "CREATE TABLE Sheet1 ( [Field1] VarChar,[Field2] VarChar)" 
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"CREATE TABLE [{sheetName}] ([{fields_valueTypes[0]}] {fields_valueTypes[1]}");
+            //
+            for (int pair = 2; pair < fields_valueTypes.Length; pair += 2)
+            {
+                sb.Append($",[{fields_valueTypes[pair]}] {fields_valueTypes[pair + 1]}");
+            }
+            sb.Append(@")");
+
+            ExecuteNoneQuery(conn, sb.ToString());
+
+        }
+
+        /// <summary>
+        /// 根据指定的DataTable 创建一个全新的 Excel 工作表，而不添加任何数据。
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="tableSource"> 工作表名称即 tableSource.TableName；工作表中每一个字段的名称即tableSource中每一列的列名 </param>
+        public static void CreateNewSheet(OleDbConnection conn, DataTable tableSource)
+        {
+            //如果连接已经关闭，则先打开连接
+            if (conn.State == ConnectionState.Closed)
+            {
+                conn.Open();
+            }
+
+            string[] fields_valueTypes = new string[tableSource.Columns.Count * 2];
+
+            for (int i = 0; i < tableSource.Columns.Count; i++)
+            {
+                fields_valueTypes[i * 2] = tableSource.Columns[i].ColumnName;
+                fields_valueTypes[i * 2 + 1] = ConvertExcelDataType(tableSource.Columns[i].DataType);//"char(255)";//tableSource.Columns[i].DataType.ToString();
+            }
+
+            // 创建全新的Excel工作表
+            CreateNewSheet(conn, tableSource.TableName, fields_valueTypes);
+        }
+
+        /// <summary> 对Excel数据库执行非查询SQL语句 </summary>
+        /// <param name="conn"></param>
+        /// <param name="sql"> 用来执行的非查询sql语句</param>
+        /// <remarks></remarks>
+        private static void ExecuteNoneQuery(OleDbConnection conn, string sql)
+        {
+            //如果连接已经关闭，则先打开连接
+            if (conn.State == ConnectionState.Closed)
+            {
+                conn.Open();
+            }
+            if (conn.DataSource != null && IsExcelDataSource(conn.DataSource))
+            {
+                using (OleDbCommand ole_cmd = conn.CreateCommand())
+                {
+                    ole_cmd.CommandText = sql;
+                    try
+                    {
+                        //在工作簿中创建新表格时，Excel工作簿不能处于打开状态
+                        ole_cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("创建Excel文档失败，错误信息： " + ex.Message, "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("未正确连接到Excel数据库!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
 
         #region ---   子函数
 
@@ -604,11 +609,11 @@ namespace eZstd.Data
         /// <returns> Excel中的数据类型 </returns>
         private static string ConvertExcelDataType(Type type)
         {
-            if (type == typeof (float) || type == typeof (int) || type == typeof (double))
+            if (type == typeof(float) || type == typeof(int) || type == typeof(double))
             {
                 return "double";
             }
-            if (type == typeof (DateTime))
+            if (type == typeof(DateTime))
             {
                 return "date";
             }
