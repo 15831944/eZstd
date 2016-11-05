@@ -12,7 +12,7 @@ namespace eZstd.UserControls
     /// <summary>
     /// 支持复制粘贴功能的表格控件
     /// </summary>
-    public class eZDataGridViewPaste : eZDataGridView
+    internal class eZDataGridViewPaste : eZDataGridView
     {
         /// <summary>
         /// 构造函数

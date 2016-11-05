@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace eZstd.Dll
+namespace eZstd.MarshalReflection
 {
 
     public static class AssemblyHelper

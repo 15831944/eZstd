@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -132,5 +133,74 @@ namespace eZstd.Miscellaneous
             sb.AppendLine("\r\n" + exStack.StackTrace);
             return sb.ToString();
         }
+
+
+        #region ---   打印表格或者集合
+
+        /// <summary> 打印任意一个集合，以显示在一列或者一行中 </summary>
+        /// <param name="e">任意一个集合</param>
+        /// <param name="showInOneColumn"> 默认为 true，即打印为一列，如果为false，则打印为一行 </param>
+        /// <returns></returns>
+        public static StringBuilder PrintEnumerable(IEnumerable e, bool showInOneColumn = true)
+        {
+            int count = 0;
+            var enumerator = e.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                count += 1;
+            }
+            enumerator.Reset();
+            //
+            // 构造二维表格
+            object[,] value;
+            if (showInOneColumn)  // 构造一个n行1列的二维表格
+            {
+                value = new object[count, 1];
+                int i = 0;
+                while (enumerator.MoveNext())
+                {
+                    value[i, 0] = enumerator.Current;
+                    i += 1;
+                }
+            }
+            else    // 构造一个1行n列的二维表格
+            {
+                value = new object[1, count];
+                int i = 0;
+                while (enumerator.MoveNext())
+                {
+                    value[0, i] = enumerator.Current;
+                    i += 1;
+                }
+            }
+            //
+            return PrintArray(value); ;
+        }
+
+        /// <summary>
+        /// 打印二维表格
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="array2D">一个二维表格</param>
+        /// <returns></returns>
+        public static StringBuilder PrintArray<T>(T[,] array2D)
+        {
+            int rLower = array2D.GetLowerBound(0);
+            int rUpper = array2D.GetUpperBound(0);
+            int cLower = array2D.GetLowerBound(1);
+            int cUpper = array2D.GetUpperBound(1);
+
+            StringBuilder sb = new StringBuilder();
+            for (int r = rLower; r <= rUpper; r++)
+            {
+                for (int c = cLower; c <= cUpper; c++)
+                {
+                    sb.Append(array2D[r, c] + "\t");
+                }
+                sb.AppendLine();
+            }
+            return sb;
+        }
+        #endregion
     }
 }

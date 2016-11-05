@@ -1,49 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Windows.Forms;
 using eZstd.Drawing;
 using eZstd.Geometry;
 using eZstd.MatrixPack;
+using eZstd.UserControls;
 using eZstd.Windows;
 
-namespace eZstd
+namespace eZstd.Test
 {
-    public class parent
-    {
-    }
-
-    public class child : parent
-    {
-    }
-    public class grandChild : child { }
     public class ExeTest
     {
         [STAThread]
         public static void Main()
         {
-
-            grandChild c = new grandChild();
-            parent p = new parent();
-
-            Type tParent = p.GetType();
-            Type tChild = c.GetType();
-         
-            var b1 = p.GetType().IsInstanceOfType(c);
-            var b2 = tChild == tParent;
+            ShowForm();
         }
 
+        // 以窗口的形式打开程序
         public static void ShowForm()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //
-
             Application.Run(new Form1());
         }
 
@@ -53,9 +31,9 @@ namespace eZstd
         {
             double[][] dataA = new double[][]
             {
-                new double[] {8.1,2.3,-1.5},
-                new double[] {0.5,-6.23,0.87},
-                new double[] {2.5,1.5,10.2},
+                new double[] {8.1, 2.3, -1.5},
+                new double[] {0.5, -6.23, 0.87},
+                new double[] {2.5, 1.5, 10.2},
             };
 
             double[][] dataB = new double[][]
@@ -71,15 +49,15 @@ namespace eZstd
             // 通过LU上下三角分解法 求解线性方程组 Ax = b
             QrDecomposition d = new QrDecomposition(A);
             Matrix x = d.Solve(b);
-
         }
 
         public static void m2()
         {
             double[][] dataA = new double[][]
             {
-                new double[] {0.03,58.9},
-                new double[] {5.31,-6.10},};
+                new double[] {0.03, 58.9},
+                new double[] {5.31, -6.10},
+            };
 
             double[][] dataB = new double[][]
             {

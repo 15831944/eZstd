@@ -1,6 +1,6 @@
-﻿namespace eZstd
+﻿namespace eZstd.UserControls
 {
-    partial class Form1
+    partial class Example_eZDataGridView
     {
         /// <summary>
         /// Required designer variable.
@@ -28,18 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // Form1
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Name = "Form1";
-            this.Text = "Form1";
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
-            this.ResumeLayout(false);
-
+            this.Text = "FormExample_eZDataGridView";
         }
 
         #endregion

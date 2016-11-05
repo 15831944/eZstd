@@ -33,18 +33,5 @@ namespace eZstd.Miscellaneous
             }
         }
 
-        public static StringBuilder PrintArray(object[,] array)
-        {
-            StringBuilder sb = new StringBuilder();
-            for (int r = array.GetLowerBound(0); r <= array.GetUpperBound(0); r++)
-            {
-                for (int c = array.GetLowerBound(1); c <= array.GetUpperBound(1); c++)
-                {
-                    sb.Append(array[r, c].ToString() + "\t");
-                }
-                sb.AppendLine();
-            }
-            return sb;
-        }
     }
 }
