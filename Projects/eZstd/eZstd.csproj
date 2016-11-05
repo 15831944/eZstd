@@ -4,13 +4,28 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FB9B6528-5424-4B7A-AEBA-6733450DC44B}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>eZstd</RootNamespace>
     <AssemblyName>eZstd</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,6 +35,7 @@
     <OutputPath>..\..\bin\</OutputPath>
     <DocumentationFile>eZstd.xml</DocumentationFile>
     <NOWARN>1591,660,661</NOWARN>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +45,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>eZUserControls.xml</DocumentationFile>
     <NOWARN>1591,660,661</NOWARN>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -51,7 +68,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\bin\</OutputPath>
-    <DocumentationFile>eZUserControls.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\eZstd.xml</DocumentationFile>
     <NOWARN>1591,660,661</NOWARN>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -68,6 +85,18 @@
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>zengfyStandardClassLibrary.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>936429B69094D7EB3207E8F417E0F42ED552D392</ManifestCertificateThumbprint>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
@@ -104,14 +133,13 @@
     <Compile Include="API\APIUtils\IO.cs" />
     <Compile Include="API\APIUtils\Windows.cs" />
     <Compile Include="Data\BinarySerializer.cs" />
-    <Compile Include="Data\XmlList0.cs" />
     <Compile Include="Data\ExcelDBHelper.cs" />
     <Compile Include="Data\DataTableHelper.cs" />
     <Compile Include="Data\sqlDataSetHelper.cs" />
     <Compile Include="Data\SqlModelHelper.cs" />
     <Compile Include="Data\StringSerializer.cs" />
     <Compile Include="Data\XmlList.cs" />
-    <Compile Include="Dll\AssemblyHelper.cs" />
+    <Compile Include="MarshalReflection\AssemblyHelper.cs" />
     <Compile Include="Drawing\ColorUtils.cs" />
     <Compile Include="Drawing\DrawShapesTest.cs">
       <SubType>Form</SubType>
@@ -120,21 +148,28 @@
       <DependentUpon>DrawShapesTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Drawing\TransformUtils.cs" />
-    <Compile Include="ExeTest.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="Test\ExeTest.cs" />
+    <Compile Include="Test\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="Test\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Miscellaneous\OldW.DllActivator.cs" />
-    <Compile Include="Dll\AssemblyCompiler.cs" />
+    <Compile Include="MarshalReflection\Interaction.cs" />
+    <Compile Include="MarshalReflection\DllActivator.cs" />
+    <Compile Include="MarshalReflection\AssemblyCompiler.cs" />
     <Compile Include="Miscellaneous\DateTimeHelper.cs" />
     <Compile Include="Miscellaneous\DebugUtils.cs" />
     <Compile Include="Miscellaneous\ExtensionMethods.cs" />
     <Compile Include="Miscellaneous\Utils.cs" />
     <Compile Include="UserControls\eZDataGridViewUIAdd.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\FormExample_eZDataGridView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControls\FormExample_eZDataGridView.Designer.cs">
+      <DependentUpon>FormExample_eZDataGridView.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\NumberChanging.cs">
       <SubType>UserControl</SubType>
@@ -188,7 +223,7 @@
     <EmbeddedResource Include="Drawing\DrawShapesTest.resx">
       <DependentUpon>DrawShapesTest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
+    <EmbeddedResource Include="Test\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\NumberChanging.resx">
@@ -204,7 +239,26 @@
       <DependentUpon>eZDataGridViewPaste.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="zengfyStandardClassLibrary.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace eZstd.UserControls
 {
     /// <summary> 通过设计界面中的弹出菜单，来执行表格中记录行的插入、增加或删除等操作 </summary>
-   public class eZDataGridViewUIAdd : eZDataGridView
+    internal class eZDataGridViewUIAdd : eZDataGridView
     {
 
         #region   --- ControlFields
@@ -42,7 +42,7 @@ namespace eZstd.UserControls
             // 事件绑定
             this.RowHeaderMouseClick += new DataGridViewCellMouseEventHandler(myDataGridView_RowHeaderMouseClick);
             this.CellMouseClick += new DataGridViewCellMouseEventHandler(myDataGridView_CellMouseClick);
-            
+
             //
             this.components = new Container();
             this.CMS_RowHeader = new ContextMenuStrip(this.components);

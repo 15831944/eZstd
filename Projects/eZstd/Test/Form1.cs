@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace eZstd
+namespace eZstd.Test
 {
     public partial class Form1 : Form
     {

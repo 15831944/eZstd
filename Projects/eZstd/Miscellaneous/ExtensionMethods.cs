@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 
 
-namespace eZstd
+namespace eZstd.Miscellaneous
 {
     public static class ExtensionMethods
     {

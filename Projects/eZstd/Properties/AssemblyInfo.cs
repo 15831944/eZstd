@@ -1,3 +1,4 @@
+using System.Resources;
 // VBConversions Note: VB project level imports
 using System.Collections.Generic;
 using System;
@@ -20,11 +21,11 @@ using System.Runtime.InteropServices;
 
 // Review the values of the assembly attributes
 
-[assembly:AssemblyTitle("zfyClassLibrary")]
+[assembly: AssemblyTitle("zengfyStandardClassLibrary")]
 [assembly:AssemblyDescription("")]
-[assembly:AssemblyCompany("XN")]
-[assembly:AssemblyProduct("zfyClassLibrary")]
-[assembly:AssemblyCopyright("Copyright © XN 2015")]
+[assembly: AssemblyCompany("SJTU")]
+[assembly: AssemblyProduct("zengfyStandardClassLibrary")]
+[assembly: AssemblyCopyright("Copyright © SJTU 2016")]
 [assembly:AssemblyTrademark("")]
 
 [assembly:ComVisible(false)]
@@ -43,6 +44,7 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // <Assembly: AssemblyVersion("1.0.*")>
 
-[assembly:AssemblyVersion("1.0.0.0")]
-[assembly:AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion("2.0.0.0")]
+[assembly: NeutralResourcesLanguage("")]
 

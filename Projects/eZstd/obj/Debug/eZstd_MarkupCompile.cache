@@ -1,7 +1,7 @@
 ﻿eZstd
 
 
-winexe
+library
 C#
 .cs
 F:\ProgrammingCases\GitHubProjects\eZstd\Projects\eZstd\obj\Debug\
@@ -12,8 +12,8 @@ false
 
 1-1392470529
 
-62-1871958269
-15432317124
+64-715707608
+15-1142331606
 Windows\ShowDialogWinTemplate.xaml;
 
 False

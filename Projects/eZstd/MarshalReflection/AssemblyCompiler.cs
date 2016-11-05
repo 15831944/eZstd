@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using Microsoft.CSharp;
 
-namespace eZstd.Miscellaneous
+namespace eZstd.MarshalReflection
 {
     /// <summary> 动态编译程序集。在程序运行的过程中动态地编译出一个程序集 .dll 或者 .exe。 </summary>
     public class AssemblyCompiler

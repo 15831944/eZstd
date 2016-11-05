@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
+using SysMarshal = System.Runtime.InteropServices.Marshal;
 using System.Windows.Forms;
 
 namespace eZstd.Drawing
@@ -11,7 +11,7 @@ namespace eZstd.Drawing
     /// <summary>
     /// 与 GDI+ 绘图相关的测试
     /// </summary>
-    public partial class DrawShapesTest : Form
+    internal partial class DrawShapesTest : Form
     {
         public DrawShapesTest()
         {
@@ -49,7 +49,7 @@ namespace eZstd.Drawing
                 // that can be used by PlayRecord.
                 dataArray = new byte[dataSize];
                 // Copies data from a managed array to an unmanaged memory pointer, or from an unmanaged memory pointer to a managed array.
-                Marshal.Copy(data, dataArray, 0, dataSize);
+                SysMarshal.Copy(data, dataArray, 0, dataSize);
             }
             // 将 矢量图中的这一个小图元显示在 pictureBox1 的绘图面板 Graphics 中
             metafile1.PlayRecord(recordType, flags, dataSize, dataArray); // Plays an individual metafile record.

@@ -4,7 +4,7 @@ using System;
 
 #endregion
 
-namespace eZstd
+namespace eZstd.Miscellaneous
 {
     /// <summary>
     /// 与时间数据相关的操作，比如日期与字符、整数之间的相互转换等。
