@@ -148,7 +148,7 @@ namespace eZstd.Geometry
         /// <summary> 空间矢量的长度 </summary>
         public double GetLength()
         {
-            return Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2));
+            return Math.Sqrt(X * X + Y * Y + Z * Z);
         }
 
         /// <summary>

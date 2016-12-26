@@ -42,26 +42,34 @@ namespace eZstd.MarshalReflection
             return obj;
         }
 
+  
         /// <summary>
         /// 打开某文件（不管是否已经打开）所对应的COM对象。
         /// </summary>
-        /// <param name="monikerName">某个文件的名称，比如“C:\\tempData.xlsx”。
+        /// <typeparam name="TObj">如果输入的是Excel的文件名，则对应的返回类型为 Workbook；</typeparam>
+        /// <param name="monikerName">某个文件的名称，比如“C:\tempData.xlsx”。
         /// 注意，当此文件已经被打开时，则此方法会直接返回打开了的那个文件所在的COM对象；
         /// 而如果此文件还未打开，则此方法会将此文件打开，然后再返回对应的COM对象。</param>
-        /// <returns></returns>
-        public static object GetObjectFromFile(string monikerName)
+        /// <returns>如果打开不成功，则返回 null</returns>
+        public static TObj GetObjectFromFile<TObj>(string monikerName)
         {
-            object obj;
+            TObj resObj = default(TObj);
             if (File.Exists(monikerName))
             {
-                obj = SysMarshal.BindToMoniker(monikerName);
-
+                try
+                {
+                    object obj = SysMarshal.BindToMoniker(monikerName);
+                    if (obj != null)
+                    {
+                        resObj = (TObj)obj;
+                    }
+                }
+                catch (Exception)
+                {
+                    resObj = default(TObj);
+                }
             }
-            else
-            {
-                obj = null;
-            }
-            return obj;
+            return resObj;
         }
     }
 }
