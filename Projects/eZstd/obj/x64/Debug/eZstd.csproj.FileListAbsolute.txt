@@ -1,4 +1,3 @@
-F:\ProgrammingCases\GitHubProjects\eZstd\Projects\eZstd\obj\x64\Debug\eZstd.csprojResolveAssemblyReference.cache
 F:\ProgrammingCases\GitHubProjects\eZstd\Projects\eZstd\obj\x64\Debug\Windows\ShowDialogWinTemplate.g.cs
 F:\ProgrammingCases\GitHubProjects\eZstd\Projects\eZstd\obj\x64\Debug\GeneratedInternalTypeHelper.g.cs
 F:\ProgrammingCases\GitHubProjects\eZstd\Projects\eZstd\obj\x64\Debug\Windows\ShowDialogWinTemplate.baml
@@ -17,3 +16,4 @@ F:\ProgrammingCases\GitHubProjects\eZstd\Projects\eZstd\obj\x64\Debug\eZstd.pdb
 F:\ProgrammingCases\GitHubProjects\eZstd\bin\eZstd.pdb
 F:\ProgrammingCases\GitHubProjects\eZstd\bin\eZstd.dll
 F:\ProgrammingCases\GitHubProjects\eZstd\Projects\eZstd\obj\x64\Debug\eZstd.dll
+F:\ProgrammingCases\GitHubProjects\eZstd\Projects\eZstd\obj\x64\Debug\eZstd.csprojResolveAssemblyReference.cache

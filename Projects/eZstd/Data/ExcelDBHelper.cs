@@ -48,6 +48,40 @@ namespace eZstd.Data
             return conn;
         }
 
+        /// <summary> 打开 Excel 数据库 </summary>
+        /// <param name="excelConnection"></param>
+        /// <returns>如果打开成功，则返回 true</returns>
+        public static bool OpenConnection(OleDbConnection excelConnection)
+        {
+            if (excelConnection.State != ConnectionState.Open)
+            {
+                try
+                {
+                    excelConnection.Open();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    // 出错类型为 AccessViolationException. 
+
+                    // 请检查是否安装 AccessDatabaseEngine 2007 或 AccessDatabaseEngine 2010 X64。推荐后者。
+                    MessageBox.Show(ex.Message + @"请检查是否安装 AccessDatabaseEngine 2007 或 AccessDatabaseEngine 2010 X64。",
+                        @"打开Excel数据库出错", MessageBoxButtons.OK);
+
+                    // 另外，可以尝试将数据库连接字符串修改为：
+                    //strConn = "Provider=Microsoft.ACE.OLEDB.12.0;" +
+                    //          "Data Source=" + excelWorkbookPath + ";" +
+                    //          "OLE DB Services=-1;" +
+                    //          $"Extended Properties='Excel 12.0;HDR=YES;IMEX={iMEX}'";
+
+                    return false;
+                }
+            }
+            else
+            {
+                return true;
+            }
+        }
 
         /// <summary>
         /// 验证连接的数据源是否是Excel数据库

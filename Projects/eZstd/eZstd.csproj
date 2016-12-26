@@ -9,7 +9,7 @@
     <AssemblyName>eZstd</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
@@ -87,7 +87,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>zengfyStandardClassLibrary.snk</AssemblyOriginatorKeyFile>
@@ -139,6 +139,9 @@
     <Compile Include="Data\SqlModelHelper.cs" />
     <Compile Include="Data\StringSerializer.cs" />
     <Compile Include="Data\XmlList.cs" />
+    <Compile Include="Drawing\HSLColor.cs" />
+    <Compile Include="Enumerable\Array2D.cs" />
+    <Compile Include="Enumerable\EnumUtility.cs" />
     <Compile Include="MarshalReflection\AssemblyHelper.cs" />
     <Compile Include="Drawing\ColorUtils.cs" />
     <Compile Include="Drawing\DrawShapesTest.cs">
@@ -148,6 +151,8 @@
       <DependentUpon>DrawShapesTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Drawing\TransformUtils.cs" />
+    <Compile Include="Enumerable\ArrayConstructor.cs" />
+    <Compile Include="Mathematics\SpeedMode.cs" />
     <Compile Include="Test\ExeTest.cs" />
     <Compile Include="Test\Form1.cs">
       <SubType>Form</SubType>
@@ -240,6 +245,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Mathematics\ClassDiagram1.cd" />
     <None Include="zengfyStandardClassLibrary.snk" />
   </ItemGroup>
   <ItemGroup>

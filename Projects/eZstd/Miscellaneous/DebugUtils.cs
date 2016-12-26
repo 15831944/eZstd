@@ -17,6 +17,7 @@ namespace eZstd.Miscellaneous
     {
         #region 弹框显示集合中的某些属性或者字段的值
 
+
         /// <summary>
         /// 将集合中的每一个元素的ToString函数的结果组合到一个字符串中进行显示
         /// </summary>
@@ -41,7 +42,6 @@ namespace eZstd.Miscellaneous
                     sb.Append(o.ToString() + ",\t");
                 }
             }
-
             MessageBox.Show(sb.ToString(), title, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 

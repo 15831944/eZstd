@@ -47,7 +47,7 @@ namespace eZstd.Geometry
 
         public override string ToString()
         {
-            return "( " + X.ToString() + "," + "\t" + Y.ToString() +  " )";
+            return "( " + X.ToString() + "," + "\t" + Y.ToString() + " )";
         }
 
         #region ---   空间点 的方法
@@ -66,10 +66,10 @@ namespace eZstd.Geometry
             return Distance(this, node2);
         }
 
+        /// <summary> 平面向量的长度 </summary>
         public double GetLength()
         {
-
-            return Math.Abs(Math.Sqrt(X) + Math.Sqrt(Y));
+            return Math.Sqrt(X * X + Y * Y);
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace eZstd.Geometry
         {
             return X * vector2.X + Y * vector2.Y;
         }
-        
+
         /// <summary> 两个方向矢量是否共线（方向相同或者相反）。容差为整个系统的容差 AngleTolerance。</summary>
         /// <param name="v2"></param>
         /// <returns></returns>
