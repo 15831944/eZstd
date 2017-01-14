@@ -21,6 +21,21 @@ namespace eZstd.Miscellaneous
         /// <summary>
         /// 将集合中的每一个元素的ToString函数的结果组合到一个字符串中进行显示
         /// </summary>
+        /// <param name="args">列出要显示的每一个元素</param>
+        /// <remarks></remarks>
+        public static void ShowEnumerable(params object[] args)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (object o in args)
+            {
+                sb.Append(o.ToString() + ",\t");
+            }
+            MessageBox.Show(sb.ToString(), @"集合元素", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        /// <summary>
+        /// 将集合中的每一个元素的ToString函数的结果组合到一个字符串中进行显示
+        /// </summary>
         /// <param name="V"></param>
         /// <param name="title"></param>
         /// <param name="newLineHandling"> 如果元素之间是以换行分隔，则为True，否则是以逗号分隔。 </param>

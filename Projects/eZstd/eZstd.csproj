@@ -122,16 +122,16 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\API\Dll.cs" />
-    <Compile Include="API\API\Hook.cs" />
-    <Compile Include="API\API\IO.cs" />
-    <Compile Include="API\API\Message.cs" />
-    <Compile Include="API\API\Windows.cs" />
-    <Compile Include="API\API\Enumerator.cs" />
-    <Compile Include="API\API\Types.cs" />
-    <Compile Include="API\API\UnClassified.cs" />
-    <Compile Include="API\APIUtils\IO.cs" />
-    <Compile Include="API\APIUtils\Windows.cs" />
+    <Compile Include="API\Dll.cs" />
+    <Compile Include="API\Hook.cs" />
+    <Compile Include="API\IO.cs" />
+    <Compile Include="API\Message.cs" />
+    <Compile Include="API\Windows.cs" />
+    <Compile Include="API\Enumerator.cs" />
+    <Compile Include="API\Types.cs" />
+    <Compile Include="API\UnClassified.cs" />
+    <Compile Include="API\IOUtils.cs" />
+    <Compile Include="API\WindowsUtils.cs" />
     <Compile Include="Data\BinarySerializer.cs" />
     <Compile Include="Data\ExcelDBHelper.cs" />
     <Compile Include="Data\DataTableHelper.cs" />
@@ -153,6 +153,7 @@
     <Compile Include="Drawing\TransformUtils.cs" />
     <Compile Include="Enumerable\ArrayConstructor.cs" />
     <Compile Include="Mathematics\SpeedMode.cs" />
+    <Compile Include="Mathematics\SplineInterpolation.cs" />
     <Compile Include="Test\ExeTest.cs" />
     <Compile Include="Test\Form1.cs">
       <SubType>Form</SubType>

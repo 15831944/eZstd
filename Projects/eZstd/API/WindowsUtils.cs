@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 using win = eZstd.API.Windows;
 
 
-namespace eZstd.APIUtils
+namespace eZstd.API
 {
 
     /// <summary>
     /// 在windows API中，已经有大量的函数可以直接调用，但是在某些特殊的情况下，还是要通过一些复杂的操作流程才能对窗口进行处理。
     /// 此类对于这些复杂操作进行进一步封装。
     /// </summary>
-    public static class Windows
+    public static class WindowsUtils
     {
         #region --- 搜索父窗口（或控件）中指定类名与窗口文本的子窗口
 
