@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Media.Effects;
 
 namespace eZstd.Enumerable
 {
@@ -1323,6 +1324,113 @@ namespace eZstd.Enumerable
                 }
             }
             return sb.ToString();
+        }
+
+        #endregion
+
+        #region ---   多个二维数组的复合计算
+
+        /// <summary>
+        /// 多个数值之间的计算过程
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns>多个数值之间算术计算的结果值</returns>
+        public delegate double NumericalOperation(params double[] values);
+
+        /// <summary>
+        /// 多个二维数组的复合计算
+        /// </summary>
+        /// <param name="operation"></param>
+        /// <param name="arrays">集合中二维数组的个数可以多于 <paramref name="operation"/> 中进行数值计算的元素个数；
+        /// 但是每一个二维数组的大小必须相同。</param>
+        /// <returns></returns>
+        public static Array2D CompositeCalculation(NumericalOperation operation, params Array2D[] arrays)
+        {
+            int rows;
+            int columns;
+            int arraysCount = arrays.Length;
+            double[][,] arraysD = new double[arraysCount][,];
+            for (int i = 0; i < arraysCount; i++)
+            {
+                arraysD[i] = arrays[i].ValueD;
+            }
+
+            if (CheckArrays(ref arrays, out rows, out columns))
+            {
+                double[,] result = CompositeCalculation(operation, rows, columns, arraysCount, arraysD);
+                return new Array2D(result);
+            }
+            else
+            {
+                throw new ArgumentException(@"The Dimensions of the two 2D arrays must match.");
+            }
+            return null;
+        }
+        
+        /// <summary> 核心计算过程 </summary>
+        /// <param name="operation">多个数组之间的计算过程</param>
+        /// <param name="rows">每个数组的行数</param>
+        /// <param name="columns">每个数组的列数</param>
+        /// <param name="arraysCount">数组的个数</param>
+        /// <param name="arrays">所有要参与计算的数组，每个数组都是一个二维数组double[,]或int[,]，而且数组的大小一定要相同</param>
+        /// <returns></returns>
+        private static double[,] CompositeCalculation(NumericalOperation operation, int rows, int columns, int arraysCount, params double[][,] arrays)
+        {
+            double[,] res = new double[rows, columns];
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < columns; c++)
+                {
+                    double[] pa = new double[arraysCount];
+                    for (int i = 0; i < arraysCount; i++)
+                    {
+                        pa[i] = arrays[i][r, c];
+                    }
+                    res[r, c] = operation(pa);
+                }
+            }
+            return res;
+        }
+
+
+        /// <summary> 比较多个二维数组的大小是否相同 </summary>
+        /// <param name="array2ds">每一个数组都必须是二维数组，比如double[,]或者int[,]</param>
+        /// <param name="rows"></param>
+        /// <param name="columns"></param>
+        /// <returns>如果所有二维数组的大小都相同，则返回true</returns>
+        private static bool CheckArrays(ref Array[] array2ds, out int rows, out int columns)
+        {
+            rows = array2ds[0].GetLength(0);
+            columns = array2ds[0].GetLength(1);
+
+            for (int i = 1; i < array2ds.Length; i++)
+            {
+                if ((array2ds[i].GetLength(0) != rows) || (array2ds[i].GetLength(1) != columns))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary> 比较多个二维数组的大小是否相同 </summary>
+        /// <param name="array2ds"></param>
+        /// <param name="rows"></param>
+        /// <param name="columns"></param>
+        /// <returns>如果所有二维数组的大小都相同，则返回true</returns>
+        private static bool CheckArrays(ref Array2D[] array2ds, out int rows, out int columns)
+        {
+            rows = array2ds[0].Rows;
+            columns = array2ds[0].Columns;
+
+            for (int i = 1; i < array2ds.Length; i++)
+            {
+                if ((array2ds[i].Rows != rows) || (array2ds[i].Columns != columns))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         #endregion

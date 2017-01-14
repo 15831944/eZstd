@@ -1,4 +1,5 @@
 using System;
+using eZstd.API;
 
 namespace eZstd.API
 {
@@ -2058,6 +2059,7 @@ namespace eZstd.API
     #endregion
 
     #region ---   IO
+
     /// <summary>
     /// ShellExecute()函数的枚举参数
     /// </summary>
@@ -2110,5 +2112,40 @@ namespace eZstd.API
         SW_MAX = 11
     }
 
+    /// <summary> <see cref="IO.ShellExecute"/> 方法中的 lpOperation 参数。 </summary>
+    public struct ShellExecuteOperation
+    {
+        /// <summary>
+        /// The default verb is used, if available. If not, the "open" verb is used. If neither verb is available, the system uses the first verb listed in the registry.
+        /// </summary>
+        public const string NULL = "NULL";
+        /// <summary>
+        /// Launches an editor and opens the document for editing. If lpFile is not a document file, the function will fail.
+        /// </summary>
+        public const string edit = "edit";
+
+        /// <summary>
+        /// Explores a folder specified by lpFile.
+        /// </summary>
+        public const string explore = "explore";
+
+        /// <summary>
+        /// Initiates a search beginning in the directory specified by lpDirectory.
+        /// </summary>
+        public const string find = "find";
+
+        /// <summary>
+        /// Opens the item specified by the lpFile parameter. The item can be a file or folder.
+        /// </summary>
+        public const string open = "open";
+
+        /// <summary>
+        /// Prints the file specified by lpFile. If lpFile is not a document file, the function fails.
+        /// </summary>
+        public const string print = "print";
+
+
+
+    }
     #endregion
 }

@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using eZstd.API;
 
-namespace eZstd.APIUtils
+namespace eZstd.API
 {
-    public class IO
+    public class IOUtils
     {
         /// <summary>
         /// 通过生成.bat文件的方式来删除指定的文件，包括某正在执行的.exe或.dll文件。
