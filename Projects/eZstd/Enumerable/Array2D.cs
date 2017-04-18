@@ -1326,9 +1326,37 @@ namespace eZstd.Enumerable
             return sb.ToString();
         }
 
+        public string[,] ToString2D()
+        {
+            string[,] s = new string[Rows, Columns];
+            if (IsElementsInterger)
+            {
+                for (int r = 0; r < Rows; r++)
+                {
+                    for (int c = 0; c < Columns; c++)
+                    {
+                        s[r, c] = ValueI[r, c].ToString();
+                    }
+                }
+            }
+            else
+            {
+                for (int r = 0; r < Rows; r++)
+                {
+                    for (int c = 0; c < Columns; c++)
+                    {
+                        s[r, c] = ValueD[r, c].ToString();
+                    }
+                }
+            }
+            return s;
+        }
+
         #endregion
 
         #region ---   多个二维数组的复合计算
+
+        #region ---   浮点数计算
 
         /// <summary>
         /// 多个数值之间的计算过程
@@ -1366,7 +1394,7 @@ namespace eZstd.Enumerable
             }
             return null;
         }
-        
+
         /// <summary> 核心计算过程 </summary>
         /// <param name="operation">多个数组之间的计算过程</param>
         /// <param name="rows">每个数组的行数</param>
@@ -1374,7 +1402,8 @@ namespace eZstd.Enumerable
         /// <param name="arraysCount">数组的个数</param>
         /// <param name="arrays">所有要参与计算的数组，每个数组都是一个二维数组double[,]或int[,]，而且数组的大小一定要相同</param>
         /// <returns></returns>
-        private static double[,] CompositeCalculation(NumericalOperation operation, int rows, int columns, int arraysCount, params double[][,] arrays)
+        private static double[,] CompositeCalculation(NumericalOperation operation, int rows, int columns, int arraysCount,
+            params double[][,] arrays)
         {
             double[,] res = new double[rows, columns];
             for (int r = 0; r < rows; r++)
@@ -1392,26 +1421,74 @@ namespace eZstd.Enumerable
             return res;
         }
 
+        #endregion
 
-        /// <summary> 比较多个二维数组的大小是否相同 </summary>
-        /// <param name="array2ds">每一个数组都必须是二维数组，比如double[,]或者int[,]</param>
-        /// <param name="rows"></param>
-        /// <param name="columns"></param>
-        /// <returns>如果所有二维数组的大小都相同，则返回true</returns>
-        private static bool CheckArrays(ref Array[] array2ds, out int rows, out int columns)
+        #region ---   整数计算
+
+        /// <summary>
+        /// 多个数值之间的计算过程
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns>多个数值之间算术计算的结果值</returns>
+        public delegate int NumericalOperationI(params int[] values);
+
+        /// <summary>
+        /// 多个整数型二维数组的复合计算
+        /// </summary>
+        /// <param name="operation"></param>
+        /// <param name="arrays">集合中二维数组的个数可以多于 <paramref name="operation"/> 中进行数值计算的元素个数；
+        /// 但是每一个二维数组的大小必须相同。 每个二维数组最好都是整数类型的。</param>
+        /// <returns></returns>
+        public static Array2D CompositeCalculation(NumericalOperationI operation, params Array2D[] arrays)
         {
-            rows = array2ds[0].GetLength(0);
-            columns = array2ds[0].GetLength(1);
-
-            for (int i = 1; i < array2ds.Length; i++)
+            int rows;
+            int columns;
+            int arraysCount = arrays.Length;
+            var arraysI = new int[arraysCount][,];
+            for (int i = 0; i < arraysCount; i++)
             {
-                if ((array2ds[i].GetLength(0) != rows) || (array2ds[i].GetLength(1) != columns))
+                arraysI[i] = arrays[i].ValueI;
+            }
+
+            if (CheckArrays(ref arrays, out rows, out columns))
+            {
+                int[,] result = CompositeCalculation(operation, rows, columns, arraysCount, arraysI);
+                return new Array2D(result);
+            }
+            else
+            {
+                throw new ArgumentException(@"The Dimensions of the two 2D arrays must match.");
+            }
+            return null;
+        }
+
+        /// <summary> 核心计算过程 </summary>
+        /// <param name="operation">多个数组之间的计算过程</param>
+        /// <param name="rows">每个数组的行数</param>
+        /// <param name="columns">每个数组的列数</param>
+        /// <param name="arraysCount">数组的个数</param>
+        /// <param name="arrays">所有要参与计算的数组，每个数组都是一个二维数组double[,]或int[,]，而且数组的大小一定要相同</param>
+        /// <returns></returns>
+        private static int[,] CompositeCalculation(NumericalOperationI operation, int rows, int columns, int arraysCount,
+            params int[][,] arrays)
+        {
+            var res = new int[rows, columns];
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < columns; c++)
                 {
-                    return false;
+                    var pa = new int[arraysCount];
+                    for (int i = 0; i < arraysCount; i++)
+                    {
+                        pa[i] = arrays[i][r, c];
+                    }
+                    res[r, c] = operation(pa);
                 }
             }
-            return true;
+            return res;
         }
+
+        #endregion
 
         /// <summary> 比较多个二维数组的大小是否相同 </summary>
         /// <param name="array2ds"></param>
@@ -1432,6 +1509,12 @@ namespace eZstd.Enumerable
             }
             return true;
         }
+
+        #endregion
+
+        #region ---   私有方法
+
+
 
         #endregion
 
@@ -1498,5 +1581,4 @@ namespace eZstd.Enumerable
 
         #endregion
     }
-
 }
