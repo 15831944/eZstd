@@ -101,7 +101,7 @@ namespace eZstd.Drawing
         /// <returns>数组中元素的个数为colorsCount</returns>
         public static Color[] ColorExpand(Color[] baseColors, int colorsCount)
         {
-            if (colorsCount <= 0) throw new ArgumentException("进行颜色插值的目标个数至少为1");
+            if (colorsCount <= 0) return new Color[0]; //new ArgumentException("进行颜色插值的目标个数至少为1");
 
             if (baseColors == null || baseColors.Length == 0) throw new ArgumentException("进行颜色插值的基准色至少要有一个");
 

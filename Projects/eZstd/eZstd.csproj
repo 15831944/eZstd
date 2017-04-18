@@ -107,6 +107,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
@@ -137,11 +139,16 @@
     <Compile Include="Data\DataTableHelper.cs" />
     <Compile Include="Data\sqlDataSetHelper.cs" />
     <Compile Include="Data\SqlModelHelper.cs" />
+    <Compile Include="Data\StaticClassSerializer.cs" />
     <Compile Include="Data\StringSerializer.cs" />
-    <Compile Include="Data\XmlList.cs" />
+    <Compile Include="Enumerable\XmlDictionary.cs" />
+    <Compile Include="Enumerable\XmlList.cs" />
+    <Compile Include="Enumerable\ListEv.cs" />
+    <Compile Include="Diagnostics\ProcessesKiller.cs" />
     <Compile Include="Drawing\HSLColor.cs" />
     <Compile Include="Enumerable\Array2D.cs" />
     <Compile Include="Enumerable\EnumUtility.cs" />
+    <Compile Include="Enumerable\XmlListEv.cs" />
     <Compile Include="MarshalReflection\AssemblyHelper.cs" />
     <Compile Include="Drawing\ColorUtils.cs" />
     <Compile Include="Drawing\DrawShapesTest.cs">
@@ -153,7 +160,7 @@
     <Compile Include="Drawing\TransformUtils.cs" />
     <Compile Include="Enumerable\ArrayConstructor.cs" />
     <Compile Include="Mathematics\SpeedMode.cs" />
-    <Compile Include="Mathematics\SplineInterpolation.cs" />
+    <Compile Include="Mathematics\Interpolation.cs" />
     <Compile Include="Test\ExeTest.cs" />
     <Compile Include="Test\Form1.cs">
       <SubType>Form</SubType>

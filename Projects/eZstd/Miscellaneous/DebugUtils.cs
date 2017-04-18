@@ -148,8 +148,7 @@ namespace eZstd.Miscellaneous
             sb.AppendLine("\r\n" + exStack.StackTrace);
             return sb.ToString();
         }
-
-
+        
         #region ---   打印表格或者集合
 
         /// <summary> 打印任意一个集合，以显示在一列或者一行中 </summary>

@@ -61,7 +61,7 @@ namespace eZstd.Miscellaneous
             }
             return -1;
         }
-        
+
         #endregion
     }
 }

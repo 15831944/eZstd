@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace eZstd.Enumerable
 {
-    /// <summary> 通过不同的方式构造数组 </summary>
+    /// <summary> 通过不同的方式构造一维或多维数组 </summary>
     public static class ArrayConstructor
     {
         #region --- FromRange:指定[start,end]
@@ -180,6 +180,7 @@ namespace eZstd.Enumerable
             return arr;
         }
 
+
         #region --- 大数组中提取小数组
 
         /// <summary> 从二维数组中提取一行向量 </summary>
@@ -212,6 +213,29 @@ namespace eZstd.Enumerable
             return result;
         }
 
+        #endregion
+
+
+        #region --- 从List等集合中提取二维数组
+
+        /// <summary>
+        /// 从多个一维行向量的List集合中构造出对应的二维数组
+        /// </summary>
+        /// <param name="numList"></param>
+        /// <returns> 返回的二维数组的列数与 List 中的第一个行向量的列数相同。</returns>
+        public static double[,] FromList2D(List<double[]> numList)
+        {
+            int columnCount = numList[0].Length;
+            double[,] arr = new double[numList.Count, columnCount];
+            for (int r = 0; r < numList.Count; r++)
+            {
+                for (int c = 0; c < columnCount; c++)
+                {
+                    arr[r, c] = numList[r][c];
+                }
+            }
+            return arr;
+        }
         #endregion
 
         public enum DistributeMode
