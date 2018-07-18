@@ -46,10 +46,11 @@ namespace eZstd.Data
             {
                 FieldInfo[] fields = static_class.GetFields(BindingFlags.Static | BindingFlags.Public);
                 object[,] a;
-                Stream f = File.Open(filename, FileMode.Open);
-                SoapFormatter formatter = new SoapFormatter();
-                a = formatter.Deserialize(f) as object[,];
-                f.Close();
+                using (Stream f = File.Open(filename, FileMode.Open))
+                {
+                    var formatter = new SoapFormatter();
+                    a = formatter.Deserialize(f) as object[,];
+                }
                 if (a.GetLength(0) != fields.Length) return false;
                 int i = 0;
                 foreach (FieldInfo field in fields)

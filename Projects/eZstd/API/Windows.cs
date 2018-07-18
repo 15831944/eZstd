@@ -337,7 +337,7 @@ namespace eZstd.API
         /// </summary>
         /// <param name="handle">指定窗口句柄</param>
         /// <param name="processId">指定一个变量，用于装载拥有那个窗口的一个进程的标识符</param>
-        /// <returns></returns>
+        /// <returns> 创建目标窗口的线程（不是进程）的Id：the id of the thread that created the target window.</returns>
         /// <remarks>拥有窗口的线程的标识符</remarks>
         [System.Runtime.InteropServices.DllImport("user32.dll", SetLastError = true)]
         public static extern int GetWindowThreadProcessId(int handle, ref int processId);

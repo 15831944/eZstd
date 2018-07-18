@@ -1,0 +1,367 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>eZx_AddinManager</name>
+    </assembly>
+    <members>
+        <member name="F:eZx_AddinManager.AddinManagerLoaderRibbon.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:eZx_AddinManager.AddinManagerLoaderRibbon.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:eZx_AddinManager.AddinManagerLoaderRibbon.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:eZx_AddinManager.ThisRibbonCollection">
+            
+        </member>
+        <member name="M:eZx_AddinManager.ThisRibbonCollection.#ctor(Microsoft.Office.Tools.Ribbon.RibbonFactory)">
+            
+        </member>
+        <member name="T:eZx_AddinManager.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:eZx_AddinManager.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:eZx_AddinManager.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:eZx_AddinManager.Properties.Resources.AddinManager">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:eZx_AddinManager.Properties.Resources.AddinManager1">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+            </summary>
+        </member>
+        <member name="P:eZx_AddinManager.Properties.Resources.LastExternalCommand">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="T:eZx_AddinManager.ThisAddIn">
+            
+        </member>
+        <member name="M:eZx_AddinManager.ThisAddIn.InternalStartup">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:eZx_AddinManager.ThisAddIn.#ctor(Microsoft.Office.Tools.Excel.ApplicationFactory,System.IServiceProvider)">
+            
+        </member>
+        <member name="M:eZx_AddinManager.ThisAddIn.Initialize">
+            
+        </member>
+        <member name="M:eZx_AddinManager.ThisAddIn.FinishInitialization">
+            
+        </member>
+        <member name="M:eZx_AddinManager.ThisAddIn.InitializeDataBindings">
+            
+        </member>
+        <member name="M:eZx_AddinManager.ThisAddIn.InitializeCachedData">
+            
+        </member>
+        <member name="M:eZx_AddinManager.ThisAddIn.InitializeData">
+            
+        </member>
+        <member name="M:eZx_AddinManager.ThisAddIn.BindToData">
+            
+        </member>
+        <member name="M:eZx_AddinManager.ThisAddIn.StartCaching(System.String)">
+            
+        </member>
+        <member name="M:eZx_AddinManager.ThisAddIn.StopCaching(System.String)">
+            
+        </member>
+        <member name="M:eZx_AddinManager.ThisAddIn.IsCached(System.String)">
+            
+        </member>
+        <member name="M:eZx_AddinManager.ThisAddIn.BeginInitialization">
+            
+        </member>
+        <member name="M:eZx_AddinManager.ThisAddIn.EndInitialization">
+            
+        </member>
+        <member name="M:eZx_AddinManager.ThisAddIn.InitializeControls">
+            
+        </member>
+        <member name="M:eZx_AddinManager.ThisAddIn.InitializeComponents">
+            
+        </member>
+        <member name="M:eZx_AddinManager.ThisAddIn.NeedsFill(System.String)">
+            
+        </member>
+        <member name="M:eZx_AddinManager.ThisAddIn.OnShutdown">
+            
+        </member>
+        <member name="T:eZx_AddinManager.Globals">
+            
+        </member>
+        <member name="M:eZx_AddinManager.Globals.#ctor">
+            
+        </member>
+        <member name="T:eZx.AddinManager.AddinManagerAssembly">
+            <summary> 比较两个 Assembly 是否表示同一个对象 </summary>
+            <remarks>在比较的过程中，会先对GetHashCode的返回值进行比较，如果返回的HashCode是相同的，则再进行 Equals 比较；
+            如果返回的HashCode值不同，则直接认为Equals为false。</remarks>  
+        </member>
+        <member name="T:eZx.AddinManager.AssemblyComparer">
+            <summary> 比较两个 Assembly 是否表示同一个对象 </summary>
+            <remarks>在比较的过程中，会先对GetHashCode的返回值进行比较，如果返回的HashCode是相同的，则再进行 Equals 比较；
+            如果返回的HashCode值不同，则直接认为Equals为false。</remarks>
+        </member>
+        <member name="T:eZx.AddinManager.AddinManagerLoader">
+            <summary> AddinManager插件 的窗口加载、命令执行 </summary>
+        </member>
+        <member name="T:eZx.AddinManager.AssemLoader">
+            <summary> 将程序集及其引用项加载到进程中 </summary>
+            <remarks>此类是完全从 Revit AddinManager中移植过来并稍微修改的</remarks>
+        </member>
+        <member name="M:eZx.AddinManager.AssemLoader.#ctor">
+            <summary> 构造函数 </summary>
+        </member>
+        <member name="M:eZx.AddinManager.AssemLoader.LoadAddin(System.String)">
+            <summary> 将程序集加载到程序中 </summary>
+            <param name="filePath">程序集的文件路径</param>
+            <returns></returns>
+        </member>
+        <member name="M:eZx.AddinManager.AssemLoader.HookAssemblyResolve">
+            <summary>
+            AssemblyResolve事件在.Net对程序集的解析失败时触发，返回一个Assembly对象。
+            因此，我们只要在这个事件的处理程序里手动加载对应目录的dll，并把对应dll的Assembly对象返回， .Net就能正确加载对应的dll了。
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:eZx.AddinManager.AssemLoader.CurrentDomain_AssemblyResolve(System.Object,System.ResolveEventArgs)">
+            <summary> 在 Execute() 方法中将不能引用到的程序集进行手动加载 </summary>
+            <param name="sender"></param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:eZx.AddinManager.AssemLoader.SearchAssemblyFileInTempFolder(System.String)">
+            <summary> 在临时文件夹中根据程序集名搜索对应的文件：对应于引用时 Copy Local 设置为 true 的程序集 </summary>
+            <param name="assemName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:eZx.AddinManager.AssemLoader.IsRevitAPIReferenced(System.Reflection.Assembly)">
+            <summary>
+            检查 RevitAPI.dll 是否被引用
+            </summary>
+            <param name="assembly"></param>
+            <returns></returns>
+        </member>
+        <member name="T:eZx.AddinManager.AssemblySelectorForm">
+            <summary> 选择程序集文件的窗口 </summary>
+            <remarks>此类是完全从 Revit AddinManager中移植过来并稍微修改的</remarks>
+        </member>
+        <member name="M:eZx.AddinManager.AssemblySelectorForm.#ctor(System.String)">
+            <summary> 构造函数 </summary>
+            <param name="assemName"></param>
+        </member>
+        <member name="T:eZx.AddinManager.FileUtils">
+            <summary> Revit AddinManager 中用来进行文件处理的类，用来参考，并不具有通用性 </summary>
+        </member>
+        <member name="M:eZx.AddinManager.FileUtils.CopyFileToFolder(System.String,System.String,System.Boolean,System.Collections.Generic.List{System.IO.FileInfo})">
+            <summary>
+            
+            </summary>
+            <param name="sourceFilePath"></param>
+            <param name="destFolder"></param>
+            <param name="onlyCopyRelated"></param>
+            <param name="allCopiedFiles">方法结束后，此 List中包含有所有复制到的文件 </param>
+            <returns></returns>
+        </member>
+        <member name="M:eZx.AddinManager.FileUtils.GetFolderSize(System.String)">
+            <summary> 返回文件夹内所有文件的总大小，单位为 MB  </summary>
+            <param name="folderPath"></param>
+            <returns> 文件夹内所有文件的总大小，单位为 MB </returns>
+        </member>
+        <member name="M:eZx.AddinManager.form_AddinManager.#ctor">
+            <summary> 构造函数 </summary>
+        </member>
+        <member name="F:eZx.AddinManager.form_AddinManager._nodesInfo">
+            <summary> 与 TreeView 同步的节点数据 </summary>
+        </member>
+        <member name="P:eZx.AddinManager.form_AddinManager.NodesInfo">
+            <summary> 与 TreeView 同步的节点数据 </summary>
+        </member>
+        <member name="M:eZx.AddinManager.form_AddinManager.AddMethodsInOneAssembly(System.String,System.Collections.Generic.List{eZx.AddinManager.IExcelExCommand})">
+            <summary> 将从一个 Assembly 中加载进来的所有有效的外部命令同步到 _nodesInfo 中 </summary>
+            <param name="methods"></param>
+        </member>
+        <member name="M:eZx.AddinManager.form_AddinManager.ChooseOpenDll(System.String)">
+            <summary> 通过选择文件对话框选择要进行数据提取的Excel文件 </summary>
+            <returns> 要进行数据提取的Excel文件的绝对路径 </returns>
+        </member>
+        <member name="M:eZx.AddinManager.form_AddinManager.ShowExCommandDescription(System.Object,System.Windows.Forms.TreeNodeMouseClickEventArgs)">
+            <summary> 提取出 TreeView中节点对应的外部命令上的描述字符 </summary>
+        </member>
+        <member name="F:eZx.AddinManager.form_AddinManager.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:eZx.AddinManager.form_AddinManager.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:eZx.AddinManager.form_AddinManager.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:eZx.AddinManager.AssemblyInfoDllManager">
+            <summary> 通过Dll中的Settings来进行程序集信息的存储与提取 </summary>
+        </member>
+        <member name="M:eZx.AddinManager.AssemblyInfoDllManager.GetInfosFromSettings">
+            <summary> 将 Settings 配置文件中的字符进行反序列化 </summary>
+            <returns></returns>
+            <remarks>对于Excel.NET的开发，不要在 IExtensionApplication.Initialize() 方法中执行此操作，否则即使在Initialize时可以正常序列化，
+            但是在调用ExternalCommand时还是会出bug，通常的报错为：没有为该对象定义无参数的构造函数。 </remarks>
+        </member>
+        <member name="T:eZx.AddinManager.AssemblyInfoFileManager">
+            <summary> 通过 外部文本文件 来进行程序集信息的存储与提取 </summary>
+        </member>
+        <member name="M:eZx.AddinManager.AssemblyInfoFileManager.GetInfosFromFile">
+            <summary> 将外部 二进制文件 中的字符进行反序列化 </summary>
+            <remarks>对于Excel.NET的开发，不要在 IExtensionApplication.Initialize() 方法中执行此操作，否则即使在Initialize时可以正常序列化，
+            但是在调用ExternalCommand时还是会出bug，通常的报错为：没有为该对象定义无参数的构造函数。 </remarks>
+        </member>
+        <member name="T:eZx.AddinManager.AssemblyInfos">
+            <summary> 将 AddinManager中的程序信与外部命令信息提取为可以进行序列化的信息 </summary>
+        </member>
+        <member name="P:eZx.AddinManager.AssemblyInfoSettings.AssemblyInfoSerial">
+            <summary> 将 AddinManager 中的程序集信息序列化后的字符 </summary>
+        </member>
+        <member name="T:eZx.AddinManager.BinarySerializer">
+            <summary>
+            在.NET中，我们可以将对象序列化从而保存对象的状态到内存或者磁盘文件中，或者分布式应用程序中用于系统通信，，这样就有可能做出一个“对象数据库”了。
+            一般来说，二进制序列化的效率要高，所获得的字节数最小。
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:eZx.AddinManager.BinarySerializer.EnCode(System.IO.Stream,System.Object)">
+            <summary>
+            将任意一个声明为Serializable的类或者其List等集合中的数据，以二进制的格式保存到对应的流文件中。
+            </summary>
+            <param name="fs">推荐使用FileStream对象。此方法中不会对Stream对象进行Close。</param>
+            <param name="Data">要进行保存的可序列化对象</param>
+            <remarks></remarks>
+        </member>
+        <member name="M:eZx.AddinManager.BinarySerializer.DeCode(System.IO.Stream)">
+            <summary>
+            从二进制流文件中，将其中的二进制数据反序列化为对应的类或集合对象。
+            </summary>
+            <param name="fs">推荐使用FileStream对象。此方法中不会对Stream对象进行Close。</param>
+            <returns>此二进制流文件所对应的可序列化对象</returns>
+            <remarks></remarks>
+        </member>
+        <member name="T:eZx.AddinManager.StringSerializer">
+            <summary>
+            将任意一个有 Serializable标记的类以二进制转换器将类中所有数据与字符串间的相互序列化。
+            即可以将类中的数据（包括数组）序列化为字符，还可以将序列化的字符反序列化为一个类。
+            </summary>
+        </member>
+        <member name="M:eZx.AddinManager.StringSerializer.Encode64(System.Object)">
+            <summary>
+            Encode arbitrary .NET serialisable object
+            into binary data encodes as base64 string.
+            </summary>
+        </member>
+        <member name="M:eZx.AddinManager.StringSerializer.Decode64(System.String)">
+            <summary>
+            Decode arbitrary .NET serialisable object
+            from binary data encoded as base64 string.
+            </summary>
+        </member>
+        <member name="T:eZx.AddinManager.StringSerializer.ZengfyLinkBinder">
+            <summary>
+            为了解决SerializationException，方法之一是确保此assembly放置在与aExcel.exe 或 revit.exe相同的文件夹中，
+            另一个方法就是实现一个像这样的类。
+            </summary>
+            <remarks>
+             Resolve System.Runtime.Serialization.SerializationException, Message =
+            "Unable to find assembly 'StoreData, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'."
+            One solution is to ensure that assembly resides in same directory as aExcel.exe or revit.exe,
+            the other is to implement a class such as this, cf.
+            http://www.codeproject.com/soap/Serialization_Samples.asp
+            </remarks>
+        </member>
+        <member name="M:eZx.AddinManager.ExCommandExecutor.InvokeCurrentExternalCommand(Microsoft.Office.Interop.Excel.Application)">
+            <summary> 执行当前（即上次执行过的那个）外部命令 </summary>
+            <param name="excelApp">作为Execute()方法的输入参数的对象，表示当前的Excel Application </param>
+        </member>
+        <member name="M:eZx.AddinManager.ExCommandExecutor.InvokeExternalCommand(System.String,eZx.AddinManager.IExcelExCommand,Microsoft.Office.Interop.Excel.Application)">
+            <summary> 执行 Excel 的外部命令 </summary>
+            <param name="assemblyPath">外部命令所对应的dll的绝对路径</param>
+            <param name="externalCommand">此命令必须是实现了 IExternalCommand.Execute </param>
+            <param name="excelApp">作为Execute()方法的输入参数的对象，表示当前的Excel Application </param>
+            <remarks>出于调试的即时更新的考虑，这里在每一次调试外部命令时，都对最新的dll进行重新加载。</remarks>
+        </member>
+        <member name="M:eZx.AddinManager.ExCommandExecutor.InvokeCommand(System.Reflection.MethodInfo,Microsoft.Office.Interop.Excel.Application)">
+            <summary> 执行 Excel 的外部命令 </summary>
+            <param name="externalCommandMethod">此命令必须是实现了 IExternalCommand.Execute </param>
+        </member>
+        <member name="M:eZx.AddinManager.ExCommandExecutor.RunActiveCommand(eZx.AddinManager.IExcelExCommand,System.String,Microsoft.Office.Interop.Excel.Application)">
+            <summary> 执行外部命令 </summary>
+            <param name="addinItem">注意这里的 addinItem 实例是刷新前的程序集中对应的类，
+            这里只能用来提取其 FullName 字符串，而不能直接用来执行， 因为虽然它确实可以执行，但是执行的是重新编译前的那个方法。</param>
+            <param name="assemblyPath"></param>
+            <param name="excelApp"></param>
+        </member>
+        <member name="M:eZx.AddinManager.ExCommandExecutor.GetDebugMessage(System.Exception)">
+            <summary> 在调试阶段，为每一种报错显示对应的报错信息及出错位置。 </summary>
+        </member>
+        <member name="T:eZx.AddinManager.ExCommandFinder">
+            <summary> 将指定程序集中的 IExternalCommand 类提取出来 </summary>
+        </member>
+        <member name="M:eZx.AddinManager.ExCommandFinder.RetriveExternalCommandsFromAssembly(System.String)">
+            <summary> 将程序集文件加载到内存，并且提取出其中的 Excel 外部命令 </summary>
+            <param name="assemblyPath"></param>
+            <returns></returns>
+        </member>
+        <member name="T:eZx.AddinManager.EcDescriptionAttribute">
+            <summary>
+            用来作为实现 ExternalCommand 的类的描述
+            </summary>
+        </member>
+        <member name="F:eZx.AddinManager.EcDescriptionAttribute.Description">
+            <summary> 具体的描述 </summary>
+        </member>
+        <member name="T:eZx.AddinManager.IExcelExCommand">
+            <summary> 用来进行AddinManager快速调试的接口。实现此接口的类必须有一个无参数的构造函数。
+            另外，推荐实现此接口的类所在程序集中也设计一个实现 IDllActivator_std 接口的类。 </summary>
+        </member>
+        <member name="M:eZx.AddinManager.IExcelExCommand.Execute(Microsoft.Office.Interop.Excel.Application,System.String@,Microsoft.Office.Interop.Excel.Range@)">
+            <summary> Excel AddinManger 快速调试插件 </summary>
+            <param name="excelApp">Excel当前程序</param>
+            <param name="errorMessage">当返回值为<see cref="F:eZx.AddinManager.ExternalCommandResult.Failed"/>时，这个属性代表给出的报错信息。</param>
+            <param name="errorRange">当返回值为<see cref="F:eZx.AddinManager.ExternalCommandResult.Failed"/>时，这个属性代表与出错内容相关的任何对象。</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

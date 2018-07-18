@@ -117,7 +117,7 @@ namespace eZstd.Mathematics
             }
 
             point.DeSortX(points);
-            if ((interpX.Min() < points.Min().x) || (interpX.Max() < points.Max().x))
+            if ((interpX.Min() < points.Min().x) || (interpX.Max() > points.Max().x))
             {
                 throw new ArgumentException("the x range to be interpolated must be within the source x range.");
             }

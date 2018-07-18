@@ -2,8 +2,11 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using eZstd.Miscellaneous;
+using eZstd.Table;
 
 namespace eZstd.UserControls
 {
@@ -17,22 +20,22 @@ namespace eZstd.UserControls
         #region   --- Properties
 
         /// <summary> 是否显示表格的行号 </summary>
-        [Browsable(true), DefaultValue(true), Category("表格"),Description("是否显示表格的行号")]
+        [Browsable(true), DefaultValue(true), Category("表格"), Description("是否显示表格的行号")]
         public bool ShowRowNumber { get; set; }
 
         /// <summary> 是否响应键盘的 delete 键，以在按下此键时将选择的单元格的内容删除 </summary>
-        [Browsable(true), DefaultValue(true), Category("表格"),Description("是否响应键盘的 delete 键，以在按下此键时将选择的单元格的内容删除")]
+        [Browsable(true), DefaultValue(true), Category("表格"), Description("是否响应键盘的 delete 键，以在按下此键时将选择的单元格的内容删除")]
         public bool KeyDelete { get; set; }
 
         /// <summary> 是否响应键盘的 Ctrl+ V 键，以在按下此组合键时将剪切板中的内容粘贴到表格中 </summary>
-        [Browsable(true), DefaultValue(true), Category("表格"),Description("是否响应键盘的 Ctrl+ V 键，以在按下此组合键时将剪切板中的内容粘贴到表格中")]
+        [Browsable(true), DefaultValue(true), Category("表格"), Description("是否响应键盘的 Ctrl+ V 键，以在按下此组合键时将剪切板中的内容粘贴到表格中")]
         public bool SupportPaste { get; set; }
 
         /// <summary>  <see cref="ManipulateRows"/> 属性只能被设置一次，当多次设置时，忽略后面的设置操作  </summary>
         private bool _manipulateRowsBeenSet = false;
         private bool _manipulateRows = false;
         /// <summary> 在表格中右键时，弹出菜单，以进行数据行的删除、插入等操作 </summary>
-        [Browsable(true), DefaultValue(true), Category("表格"),Description("在表格中右键时，弹出菜单，以进行数据行的删除、插入等操作")]
+        [Browsable(true), DefaultValue(true), Category("表格"), Description("在表格中右键时，弹出菜单，以进行数据行的删除、插入等操作")]
         public bool ManipulateRows
         {
             get { return _manipulateRows; }
@@ -368,20 +371,22 @@ namespace eZstd.UserControls
         {
             if (e.Control & e.KeyCode == Keys.V)
             {
-                var a = this.SelectedCells;
-                var count = a.Count;
+                PasteFromTable();
+                return;
+                //var a = this.SelectedCells;
+                //var count = a.Count;
 
-                if (count != 1)
-                {
-                    MessageBox.Show("请选择某一个单元格，来作为粘贴的起始位置。", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                DataGridViewCell startCell = this.SelectedCells[0];
-                PasteFromTable(startCell.RowIndex, startCell.ColumnIndex);
+                //if (count != 1)
+                //{
+                //    MessageBox.Show("请选择某一个单元格，来作为粘贴的起始位置。", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    return;
+                //}
+                //DataGridViewCell startCell = this.SelectedCells[0];
+                //PasteFromTable(startCell.RowIndex, startCell.ColumnIndex);
             }
         }
 
-        /// <summary> 将表格中的数据粘贴到DataGridView控件中（通过先添加全部行，再为添加的行赋值的方式） </summary>
+        /// <summary> ！！！ 不再使用！！！ 将表格中的数据粘贴到DataGridView控件中（通过先添加全部行，再为添加的行赋值的方式） </summary>
         /// <param name="startRow">粘贴的起始单元格的行位置</param>
         /// <param name="startCol">粘贴的起始单元格的列位置</param>
         /// <remarks>DataGridView表格的索引：行号：表头为-1，第一行为0，列号：表示行编号的列为-1，第一个数据列的列号为0.
@@ -405,32 +410,42 @@ namespace eZstd.UserControls
 
             if (rowsToAdd > 0)
             {
-                if (DataSource is IBindingList)
+                if (AllowUserToAddRows)
                 {
-                    IBindingList ds = (IBindingList)this.DataSource;
-
-                    // 对于 DataSource 绑定到 IBindingList 时，不能直接对DataGridView添加行，而是通过对于绑定的 IBindingList 进行添加来实现的。
-                    // 因为 IBindingList 中每一个新添加的元素都要符合绑定的类的构造形式。
-                    if (startRow == Rows.Count - 1)
+                    // 在表格中添加行
+                    if (DataSource is IBindingList)
                     {
-                        // 当DataGridView的最后一行（AddNew的那一行）被选中时，执行BindingList.AddNew方法会出现报错。
-                        // 所以这里进行判断，并且当其被选中时就先取消这一行的选择。
-                        CurrentCell = null;
-                    }
+                        IBindingList ds = (IBindingList)this.DataSource;
 
-                    for (int i = 0; i < rowsToAdd; i++)
+                        // 对于 DataSource 绑定到 IBindingList 时，不能直接对DataGridView添加行，而是通过对于绑定的 IBindingList 进行添加来实现的。
+                        // 因为 IBindingList 中每一个新添加的元素都要符合绑定的类的构造形式。
+                        if (startRow == Rows.Count - 1)
+                        {
+                            // 当DataGridView的最后一行（AddNew的那一行）被选中时，执行BindingList.AddNew方法会出现报错。
+                            // 所以这里进行判断，并且当其被选中时就先取消这一行的选择。
+                            CurrentCell = null;
+                        }
+
+                        for (int i = 0; i < rowsToAdd; i++)
+                        {
+                            // BindingList.AddNew方法会触发其 AddingNew 事件，用户必须手动在此事件中定义要实例化的初始变量。
+                            ds.AddNew();
+                        }
+
+                        CurrentCell = Rows[startRow].Cells[startCol];
+                    }
+                    else
                     {
-                        // BindingList.AddNew方法会触发其 AddingNew 事件，用户必须手动在此事件中定义要实例化的初始变量。
-                        ds.AddNew();
+                        // 直接添加数据行
+                        this.Rows.Add(rowsToAdd);
                     }
-
-                    CurrentCell = Rows[startRow].Cells[startCol];
                 }
                 else
-                {  // 直接添加数据行
-                    this.Rows.Add(rowsToAdd);
+                {
+                    // 不粘贴多余的行
+                    endRow = this.Rows.Count - 1;
+                    // rowsToAdd = endRow + 2 - this.Rows.Count;
                 }
-
             }
             int endCol = 0; // 要修改的最后面的那一列的列号
             endCol = startCol + writeColsCount <= this.Columns.Count
@@ -484,6 +499,184 @@ namespace eZstd.UserControls
                 Debug.Print($"粘贴数据出错,出错的单元格为第 {rowIndex + 1} 行,第 {colIndex + 1} 列）");
                 // DebugUtils.ShowDebugCatch(ex, $"粘贴数据出错,出错的单元格为第 {rowIndex + 1} 行,第 {colIndex + 1} 列）");
             }
+        }
+
+        /// <summary> 将表格中的数据粘贴到DataGridView控件中（通过先添加全部行，再为添加的行赋值的方式） </summary>
+        private void PasteFromTable()
+        {
+            var table = Table.TableUtil.GetTableFromClipBoard();
+            if (table == null || table.Length == 0)
+            {
+                return;
+            }
+
+            // 根据Table的大小与当前选择的单元格区间来确定要粘贴的范围
+            var cellRg = GetCellRangeForPaste(table);
+            if (cellRg == null)
+            {
+                return;
+            }
+            // 进行数据粘贴
+            PasteFromTable(table, cellRg);
+
+        }
+
+        /// <summary> 根据 <paramref name="tableData"/> 的大小与当前选择的单元格区间来确定要粘贴的范围 </summary>
+        private CellRange GetCellRangeForPaste(string[,] tableData)
+        {
+            // 选择的单元格区间中的左上角第一个单元格
+            if (this.SelectedCells.Count > 1)
+            {
+                // 只粘贴选择的单元格，而不进行任何的扩展
+                var ss = this.SelectedCells.Count;
+                DataGridViewCell startCell = Miscellaneous.ExtensionMethods.GetSelectedCornerCell(this, CornerIndex.UpLeft);
+                DataGridViewCell endCell = Miscellaneous.ExtensionMethods.GetSelectedCornerCell(this, CornerIndex.BottomRight);
+                //
+                var res = new CellRange()
+                {
+                    StartRow = startCell.RowIndex,
+                    StartCol = startCell.ColumnIndex,
+                    RowsCount = endCell.RowIndex - startCell.RowIndex + 1,
+                    ColsCount = endCell.ColumnIndex - startCell.ColumnIndex + 1,
+                };
+                return res;
+            }
+            else if (this.SelectedCells.Count == 1)
+            {
+                DataGridViewCell startCell = this.SelectedCells[0];
+                var startRow = startCell.RowIndex;
+                var startCol = startCell.ColumnIndex;
+
+                //
+                int writeRowsCount = tableData.GetLength(0); //要写入多少行数据
+                int writeColsCount = tableData.GetLength(1); //要写入的每一行数据中有多少列
+                //
+                int endRow = startRow + writeRowsCount - 1; // 要修改的最后一行的行号
+
+                int rowsToAdd = endRow + 2 - this.Rows.Count; // 说明要额外添加这么多行才能放置要粘贴进来的数据
+
+                if (rowsToAdd > 0)
+                {
+                    if (AllowUserToAddRows)
+                    {
+                        // 在表格中添加行
+                        if (DataSource is IBindingList)
+                        {
+                            IBindingList ds = (IBindingList)this.DataSource;
+
+                            // 对于 DataSource 绑定到 IBindingList 时，不能直接对DataGridView添加行，而是通过对于绑定的 IBindingList 进行添加来实现的。
+                            // 因为 IBindingList 中每一个新添加的元素都要符合绑定的类的构造形式。
+                            if (startRow == Rows.Count - 1)
+                            {
+                                // 当DataGridView的最后一行（AddNew的那一行）被选中时，执行BindingList.AddNew方法会出现报错。
+                                // 所以这里进行判断，并且当其被选中时就先取消这一行的选择。
+                                CurrentCell = null;
+                            }
+
+                            for (int i = 0; i < rowsToAdd; i++)
+                            {
+                                // BindingList.AddNew方法会触发其 AddingNew 事件，用户必须手动在此事件中定义要实例化的初始变量。
+                                ds.AddNew();
+                            }
+
+                            CurrentCell = Rows[startRow].Cells[startCol];
+                        }
+                        else
+                        {
+                            // 直接添加数据行
+                            this.Rows.Add(rowsToAdd);
+                        }
+                    }
+                    else
+                    {
+                        // 不粘贴多余的行
+                        endRow = this.Rows.Count - 1;
+                        // rowsToAdd = endRow + 2 - this.Rows.Count;
+                    }
+                }
+                int endCol = 0; // 要修改的最后面的那一列的列号
+                endCol = startCol + writeColsCount <= this.Columns.Count
+                    ? startCol + writeColsCount - 1
+                    : this.Columns.Count - 1;
+
+                //
+                var res = new CellRange()
+                {
+                    StartCol = startCol,
+                    StartRow = startRow,
+                    ColsCount = endCol - startCol + 1,
+                    RowsCount = endRow - startRow + 1,
+                };
+                return res;
+            }
+            return null;
+        }
+
+        /// <summary> <seealso cref="DataGridView"/> 中的一个矩形单元格区间 </summary>
+        public class CellRange
+        {
+            /// <summary> 第一行数据（非表头）的下标为 0 </summary>
+            public int StartRow;
+            public int StartCol;
+            public int RowsCount;
+            public int ColsCount;
+        }
+
+        /// <summary> 将表格中的数据粘贴到DataGridView控件中（通过先添加全部行，再为添加的行赋值的方式） </summary>
+        /// <param name="srcData">要粘贴的数据</param>
+        /// <param name="cellRange">要粘贴到的表格单元格区间，注意，此区间的行列数量必须比<paramref name="srcData"/>的行列数均要大</param>
+        /// <remarks>在进行数据粘贴时，以循环填充的方式进行粘贴</remarks>
+        private void PasteFromTable(string[,] srcData, CellRange cellRange)
+        {
+            var rowCountS = srcData.GetLength(0);
+            var colCountS = srcData.GetLength(1);
+            //
+            DataGridViewCell cell;
+            string cellStrValue;
+            Type colValueType;
+            int cellRow = 0;
+            int cellCol = 0;
+            try
+            {
+
+                for (cellCol = cellRange.StartCol; cellCol < cellRange.StartCol + cellRange.ColsCount; cellCol++)
+                {
+                    var srcCol = (cellCol - cellRange.StartCol + 1) % colCountS;
+                    srcCol = srcCol == 0 ? (colCountS - 1) : srcCol - 1;
+                    // 将第 srcCol 列源数据 放入第 c 列单元格中
+
+                    colValueType = Columns[cellCol].ValueType;
+                    // 如果某列的ValueType为Nullable<>的话，则要对其所指定的泛型进行检测，
+                    // 因为在为Rows[r].Cells[c].Value赋值时，字符"1.2"不能转换为float，而会被转换为null，
+                    // 但实际上1.2是一个合法的float值。所以这里要通过Convert.ChangeType来进行显式检验。
+                    colValueType = Utils.GetNullableGenericArgurment(colValueType) ?? colValueType;
+
+                    // 粘贴一列数据
+                    for (cellRow = cellRange.StartRow; cellRow < cellRange.StartRow + cellRange.RowsCount; cellRow++)
+                    {
+                        var srcRow = (cellRow - cellRange.StartRow + 1) % rowCountS;
+                        srcRow = srcRow == 0 ? (rowCountS - 1) : srcRow - 1;
+                        // 将第 srcRow 行源数据 放入第 cellRow 行单元格中
+                        cell = this.Rows[cellRow].Cells[cellCol];
+                        cellStrValue = srcData[srcRow, srcCol];
+
+                        // 为单元格赋值
+                        // Convert.ChangeType 用来检查字符所对应的值是否可以转换为对应字段列的数据类型，如果不能转换，则会报错。   var cellValue = 
+                        object value = !string.IsNullOrEmpty(cellStrValue)
+                            ? Convert.ChangeType(cellStrValue, colValueType)
+                            : null;
+                        cell.Value = value;
+                        SetSelectedCellCore(cellCol, cellRow, true);  // 选中此单元格
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"eZDataGridView 粘贴数据出错,出错的单元格为第 {cellRow + 1} 行,第 {cellCol + 1} 列） \r\n {ex.Message} \r\n {ex.StackTrace}");
+                // DebugUtils.ShowDebugCatch(ex, $"粘贴数据出错,出错的单元格为第 {rowIndex + 1} 行,第 {colIndex + 1} 列）");
+            }
+
         }
 
         #endregion

@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Windows.Forms;
+using eZstd.Table;
 
 
 namespace eZstd.Miscellaneous
 {
     public static class ExtensionMethods
     {
-        #region "--------Icollection"
+        #region ---   Icollection
 
         /// <summary>
         /// 将某集合中的元素添加到另一个集合中去
@@ -15,7 +17,7 @@ namespace eZstd.Miscellaneous
         /// <typeparam name="T"></typeparam>
         /// <param name="collection"></param>
         /// <param name="items"></param>
-        public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> items)
+        public static void AddRange<T>(this List<T> collection, List<T> items)
         {
             if (items == null)
             {
@@ -63,5 +65,94 @@ namespace eZstd.Miscellaneous
         }
 
         #endregion
+
+        #region ---   DataGridView
+
+        /// <summary>
+        /// 提取 <seealso cref="DataGridView"/> 控件中，选择的矩形区域的角部单元格
+        /// </summary>
+        /// <param name="dgv"></param>
+        /// <param name="cornerIndex"></param>
+        /// <returns></returns>
+        public static DataGridViewCell GetSelectedCornerCell(this DataGridView dgv, CornerIndex cornerIndex)
+        {
+            var ss = dgv.SelectedCells;
+            int minRow = int.MaxValue;
+            int minCol = int.MaxValue; ;
+            int maxRow = int.MinValue;
+            int maxCol = int.MinValue;
+
+            if (cornerIndex == CornerIndex.UpLeft)
+            {
+                // 左上角点
+                foreach (DataGridViewCell c in ss)
+                {
+                    if (c.RowIndex <= minRow)
+                    {
+                        minRow = c.RowIndex;
+                    }
+                    if (c.ColumnIndex <= minCol)
+                    {
+                        minCol = c.ColumnIndex;
+                    }
+                }
+                return dgv.Rows[minRow].Cells[minCol];
+            }
+            else if (cornerIndex == CornerIndex.BottomRight)
+            {
+
+                // 右下角点
+                foreach (DataGridViewCell c in ss)
+                {
+                    if (c.RowIndex >= maxRow)
+                    {
+                        maxRow = c.RowIndex;
+                    }
+                    if (c.ColumnIndex >= maxCol)
+                    {
+                        maxCol = c.ColumnIndex;
+                    }
+                }
+                return dgv.Rows[maxRow].Cells[maxCol];
+            }
+            else if (cornerIndex == CornerIndex.BottomLeft)
+            {
+
+                // 左下角点
+                foreach (DataGridViewCell c in ss)
+                {
+                    if (c.RowIndex >= maxRow)
+                    {
+                        maxRow = c.RowIndex;
+                    }
+                    if (c.ColumnIndex <= minCol)
+                    {
+                        minCol = c.ColumnIndex;
+                    }
+                }
+                return dgv.Rows[maxRow].Cells[minCol];
+            }
+            else if (cornerIndex == CornerIndex.BottomLeft)
+            {
+
+                // 右上角点
+                foreach (DataGridViewCell c in ss)
+                {
+                    if (c.RowIndex <= minRow)
+                    {
+                        minRow = c.RowIndex;
+                    }
+                    if (c.ColumnIndex >= maxCol)
+                    {
+                        maxCol = c.ColumnIndex;
+                    }
+                }
+                return dgv.Rows[minRow].Cells[maxCol];
+            }
+            return null;
+        }
+
+        #endregion
+
     }
 }

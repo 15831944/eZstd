@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace eZstd.Windows
@@ -29,7 +25,7 @@ namespace eZstd.Windows
         /// <param name="hideProcArgs"> 方法 hideProc 中的输入参数，如果没有参数，则输入 null </param>
         /// <remarks>此方法后面不要再有任何的代码语句，如果要处理 hideProc 返回的结果，请在 reternProc 中进行操作。</remarks>
         void HideAndOperate(
-            Delegate hideProc, 
+            Delegate hideProc,
             HideMethodReturnedProc reternProc = null,
             params object[] hideProcArgs);
     }
@@ -43,15 +39,18 @@ namespace eZstd.Windows
     /// 所以，此类通过 HideAndOperate 先将窗口进行隐藏，以跳出当前的ShowDialog的线程阻塞，
     /// 跳出后的线程即返回到 Standard Revit API Context，此时便可以与Revit进行UI交互了。
     /// 在 交互操作 _hideProc 执行完成并通过 _hideMethodReturnedProc 处理完其返回值后，再次通过 Form.ShowDialog() 将窗口显示出来。</remarks>
-    public class ShowDialogForm : System.Windows.Forms.Form, IShowDialogThread
+    public class ShowDialogForm : Form, IShowDialogThread
     {
         #region ---   Properties
+
         private bool _HideToOperate;
         //
         /// <summary> 在窗口隐藏状态下与 Revit 进行交互 的方法 </summary>
         private Delegate _hideProc;
+
         /// <summary> _hideProc 方法的输入参数 </summary>
-        private object[] _hideProcArgs;        //
+        private object[] _hideProcArgs; //
+
         /// <summary> _hideProc 方法的返回值 </summary>
         private object ReturnValue;
 
@@ -81,7 +80,8 @@ namespace eZstd.Windows
                 }
                 catch (Exception ex)
                 {
-                    throw new InvalidOperationException("A exception in the hide-method was unhandled.", ex.InnerException);
+                    throw new InvalidOperationException("A exception in the hide-method was unhandled.",
+                        ex.InnerException);
                 }
 
                 // 在 _hideProc 执行完成后对其返回值进行处理
@@ -113,7 +113,6 @@ namespace eZstd.Windows
                 res = base.ShowDialog();
 
                 // MessageBox.Show("第 " + index.ToString() + " 个 ShowDialog 结束");
-
             }
 
             // MessageBox.Show("ShowDialog 完全结束");
@@ -133,7 +132,6 @@ namespace eZstd.Windows
         public void HideAndOperate(Delegate hideProc, HideMethodReturnedProc reternProc = null,
             params object[] hideProcArgs)
         {
-
             //if (proc.Method.ReturnType == typeof(void)){};
 
             // 
@@ -144,7 +142,7 @@ namespace eZstd.Windows
             _HideToOperate = true;
 
             // 将此 ShowDialog 窗口关闭，否则不能进行 Revit 中的 PickObject() 这种要与 Revit UI 进行交互的操作。
-            this.Hide(); // 如果是ShowDialog，则这里用 Close() 或者 Hide() 都可以
+            Hide(); // 如果是ShowDialog，则这里用 Close() 或者 Hide() 都可以
 
             //注意线程执行的顺序： Hide() 执行完成后，线程会立即跳出HideAndOperate而继续执行，在 HideAndOperate 执行完成后再跳出 ShowDialog()并继续执行。
         }

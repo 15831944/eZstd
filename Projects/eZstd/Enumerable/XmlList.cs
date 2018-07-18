@@ -35,8 +35,7 @@ namespace eZstd.Enumerable
         {
             return MemberwiseClone();
         }
-
-
+        
         #region IXmlSerializable 接口的方法实现  
 
         XmlSchema IXmlSerializable.GetSchema()

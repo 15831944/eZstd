@@ -44,5 +44,34 @@ namespace eZstd.MarshalReflection
 
             return instance;
         }
+
+        /// <summary> 用新对象中的成员值去替换原对象中的对应成员值。
+        /// 其作用是在不改变原变量的内存地址的情况下，对实例对象中的属性值进行修改。
+        /// 比如对于引用类型的变量：A=B,当后期修改B的值为C时，如果用B=C，则A的值不会修改，此时只能将C中的成员的值赋值到B的对应成员中，此时A中的对应成员才会同步修改。 </summary>
+        /// <param name="originalObject">可以是<paramref name="newObject"/>的派生类 </param>
+        /// <param name="newObject">可以是<paramref name="originalObject"/>的基类</param>
+        /// <remarks>所以新对象不能是原对象的派生类。</remarks>
+        /// <returns>成功则返回 true，反之返回 false </returns>
+        public static bool OverrideFields(object originalObject, object newObject)
+        {
+            try
+            {
+                FieldInfo[] oldFields = originalObject.GetType().GetFields(BindingFlags.Public);
+                FieldInfo[] newFields = newObject.GetType().GetFields(BindingFlags.Public);
+                foreach (FieldInfo oldField in oldFields)
+                {
+                    var f = newFields.FirstOrDefault(r => r == oldField);
+                    if (f != null)
+                    {
+                        f.SetValue(originalObject, f.GetValue(newObject));
+                    }
+                };
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

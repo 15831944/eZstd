@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Media.Effects;
 
-namespace eZstd.Enumerable
+namespace eZstd.Table
 {
     /// <summary>
     /// 一些二维数组所特有的操作。
@@ -1509,12 +1509,6 @@ namespace eZstd.Enumerable
             }
             return true;
         }
-
-        #endregion
-
-        #region ---   私有方法
-
-
 
         #endregion
 

@@ -1,13 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using eZstd;
 
 namespace eZstd.Windows
 {
@@ -24,10 +15,8 @@ namespace eZstd.Windows
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            base.HideAndOperate(new PickObjectProc(PickObject),
+            HideAndOperate(new PickObjectProc(PickObject),
                 new HideMethodReturnedProc(PickOperationReturned), null);
-
         }
 
         private delegate int PickObjectProc();
@@ -41,20 +30,17 @@ namespace eZstd.Windows
                 index += 1;
                 //var refe = _uiDoc.Selection.PickObject(Autodesk.Revit.UI.Selection.ObjectType.Element, "选择任意单元");
                 //Element elem = _uiDoc.Document.GetElement(refe);
-
             }
             catch (Exception ex)
             {
             }
-            return index;// elem.Id.IntegerValue;
-
+            return index; // elem.Id.IntegerValue;
         }
 
         private void PickOperationReturned(object e)
         {
             try
             {
-              
                 labelId.Text = e.ToString();
             }
             catch (Exception ex)

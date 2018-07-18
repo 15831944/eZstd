@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data.Odbc;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace eZstd.Miscellaneous
@@ -34,7 +29,17 @@ namespace eZstd.Miscellaneous
             }
         }
 
-        /// <summary> 选择一个或多个要打开的文件 </summary>
+
+        /// <summary> 指定的字符串中是否包含有非英文字符 </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static bool StringHasNonEnglish(string str)
+        {
+            // 1、用ASCII码判断：在 ASCII码表中，英文的范围是0 - 127，而汉字则是大于127。
+            return str.Any(t => (int)t > 127);
+        }
+        #region ---   文件的打开与保存
+        /// <summary> 选择一个或多个要打开的文件。成功选择，则返回对应文件的绝对路径，否则返回 null </summary>
         /// <param name="title">对话框的标题</param>
         /// <param name="filter"> 文件过滤规则，比如 
         /// “材料库(*.txt)| *.txt”、
@@ -68,7 +73,7 @@ namespace eZstd.Miscellaneous
             return null;
         }
 
-        /// <summary> 选择要将数据保存到哪个文件 </summary>
+        /// <summary> 选择要将数据保存到哪个文件。成功选择，则返回对应文件的绝对路径，否则返回 null </summary>
         /// <param name="title">对话框的标题</param>
         /// <param name="filter"> 文件过滤规则，比如 
         /// “材料库(*.txt)| *.txt”、
@@ -81,7 +86,7 @@ namespace eZstd.Miscellaneous
             {
                 Title = title,
                 // CheckFileExists = true, // 文件不存在则不能作为有效路径
-               //  CheckPathExists = true,
+                //  CheckPathExists = true,
                 AddExtension = true,
                 Filter = filter,
                 FilterIndex = 0,
@@ -93,5 +98,6 @@ namespace eZstd.Miscellaneous
             }
             return null;
         }
+        #endregion
     }
 }
